@@ -13,7 +13,7 @@
   display: grid;
   grid-template-rows: auto auto 4em;
   color: #d5ef7f;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .header {
@@ -22,10 +22,11 @@
 }
 
 .logoBorder {
-  width: 64px;
-  height: 64px;
+  width: 3em;
+  height: 3em;
   padding: 20px;
   margin: auto;
+  margin-top: 3em;
   border: solid #d5ef7f 3px;
   border-radius: 64px;
 }
