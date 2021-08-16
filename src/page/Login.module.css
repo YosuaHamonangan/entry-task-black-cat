@@ -1,0 +1,94 @@
+.bg {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  z-index: -1;
+}
+
+.content {
+  background: #8560a9b2;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 4em;
+  color: #d5ef7f;
+  font-size: 20px;
+}
+
+.header {
+  display: grid;
+  align-items: center;
+}
+
+.logoBorder {
+  width: 64px;
+  height: 64px;
+  padding: 20px;
+  margin: auto;
+  border: solid #d5ef7f 3px;
+  border-radius: 64px;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  background-color: #d5ef7f;
+  -webkit-mask: url(../svg/logo-cat.svg) no-repeat center;
+  mask: url(../svg/logo-cat.svg) no-repeat center;
+}
+
+.form {
+  display: grid;
+  align-content: center;
+  grid-row-gap: 1em;
+  padding: 0 2em;
+}
+
+.form div {
+  position: relative;
+}
+
+.form input {
+  width: calc(100% - 3.6em);
+  font-size: 1em;
+  padding: 1em 1em 1em 2.4em;
+  border: solid white 0.1em;
+  border-radius: 3em;
+  background: none;
+  outline: none;
+}
+
+.form input:focus {
+  background: #ffffff50;
+}
+
+.form input::placeholder {
+  color: white;
+}
+
+.inputIcon {
+  width: 1.2em;
+  height: 1.2em;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 1em;
+}
+
+.email .inputIcon {
+  -webkit-mask: url(../svg/user.svg) no-repeat center;
+  mask: url(../svg/user.svg) no-repeat center;
+}
+
+.password .inputIcon {
+  -webkit-mask: url(../svg/password.svg) no-repeat center;
+  mask: url(../svg/password.svg) no-repeat center;
+}
+
+.signIn {
+  background: #d5ef7f;
+  color: black;
+  display: grid;
+  align-items: center;
+}
