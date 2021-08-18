@@ -1,4 +1,5 @@
 export interface IEventData {
+  id: string;
   username: string;
   channel: string;
   title: string;

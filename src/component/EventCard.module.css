@@ -48,15 +48,19 @@
 
 .footer {
   display: grid;
-  grid-template-columns: auto auto;
-}
-
-.footer > div {
-  display: grid;
-  grid-template-columns: 1.5em auto;
+  grid-template-columns: auto auto 1fr;
+  column-gap: 1em;
 }
 
 .footer .icon {
   width: 1em;
   height: 1em;
+}
+
+.button {
+  background: none;
+  border: none;
+  display: grid;
+  grid-template-columns: 1.5em auto;
+  text-align: left;
 }
