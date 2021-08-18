@@ -35,8 +35,6 @@
   width: 100%;
   height: 100%;
   background-color: #d5ef7f;
-  -webkit-mask: url(../svg/logo-cat.svg) no-repeat center;
-  mask: url(../svg/logo-cat.svg) no-repeat center;
 }
 
 .form {
@@ -51,9 +49,9 @@
 }
 
 .form input {
-  width: calc(100% - 3.6em);
+  width: calc(100% - 4em);
   font-size: 1em;
-  padding: 1em 1em 1em 2.4em;
+  padding: 1em 1em 1em 2.8em;
   border: solid white 0.1em;
   border-radius: 3em;
   background: none;
@@ -69,22 +67,12 @@
 }
 
 .inputIcon {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.5em;
+  height: 1.5em;
   background-color: white;
   position: absolute;
   top: 50%;
   left: 1em;
-}
-
-.email .inputIcon {
-  -webkit-mask: url(../svg/user.svg) no-repeat center;
-  mask: url(../svg/user.svg) no-repeat center;
-}
-
-.password .inputIcon {
-  -webkit-mask: url(../svg/password.svg) no-repeat center;
-  mask: url(../svg/password.svg) no-repeat center;
 }
 
 .signIn {
@@ -92,4 +80,5 @@
   color: black;
   display: grid;
   align-items: center;
+  border: none;
 }

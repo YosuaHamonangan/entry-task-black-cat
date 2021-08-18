@@ -1,0 +1,62 @@
+.card {
+  text-align: left;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  border-bottom: solid #e8e8e8 1px;
+  font-size: 1.1em;
+}
+
+.card > div {
+  margin-bottom: 0.8em;
+}
+
+.title {
+  margin-bottom: 0.8em;
+  margin-top: 0;
+  font-weight: 500;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 2em 1fr auto;
+  align-items: center;
+}
+
+.userPicture {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.date {
+  display: grid;
+  grid-template-columns: 1.5em 1fr;
+  align-items: center;
+}
+
+.dateIcon {
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+}
+
+.channel {
+  color: #8560a9;
+  padding: 0.2em 0.8em;
+  border: solid #8560a9 1px;
+  border-radius: 1em;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.footer > div {
+  display: grid;
+  grid-template-columns: 1.5em auto;
+}
+
+.footer .icon {
+  width: 1em;
+  height: 1em;
+}

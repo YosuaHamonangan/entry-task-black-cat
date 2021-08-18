@@ -1,0 +1,49 @@
+.password {
+  -webkit-mask: url(../svg/password.svg) no-repeat center;
+  mask: url(../svg/password.svg) no-repeat center;
+}
+
+.email {
+  -webkit-mask: url(../svg/user.svg) no-repeat center;
+  mask: url(../svg/user.svg) no-repeat center;
+}
+
+.logo-cat {
+  -webkit-mask: url(../svg/logo-cat.svg) no-repeat center;
+  mask: url(../svg/logo-cat.svg) no-repeat center;
+}
+
+.search {
+  -webkit-mask: url(../svg/search.svg) no-repeat center;
+  mask: url(../svg/search.svg) no-repeat center;
+}
+
+.user {
+  -webkit-mask: url(../svg/user.svg) no-repeat center;
+  mask: url(../svg/user.svg) no-repeat center;
+}
+
+.time {
+  -webkit-mask: url(../svg/time.svg) no-repeat center;
+  mask: url(../svg/time.svg) no-repeat center;
+}
+
+.check-outline {
+  -webkit-mask: url(../svg/check-outline.svg) no-repeat center;
+  mask: url(../svg/check-outline.svg) no-repeat center;
+}
+
+.check {
+  -webkit-mask: url(../svg/check.svg) no-repeat center;
+  mask: url(../svg/check.svg) no-repeat center;
+}
+
+.like-outline {
+  -webkit-mask: url(../svg/like-outline.svg) no-repeat center;
+  mask: url(../svg/like-outline.svg) no-repeat center;
+}
+
+.like {
+  -webkit-mask: url(../svg/like.svg) no-repeat center;
+  mask: url(../svg/like.svg) no-repeat center;
+}
