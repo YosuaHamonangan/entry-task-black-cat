@@ -6,7 +6,7 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import './styles/icon.css';
-import './styles/global-color.css';
+import './styles/global.css';
 
 ReactDOM.render(
   <React.StrictMode>

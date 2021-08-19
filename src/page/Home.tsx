@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Header from '../component/Header';
-import Content from '../component/Content';
+import PageTemplate from '../component/PageTemplate';
 import EventCard from '../component/EventCard';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { loadEvents, selectEvent } from '../reducer/event';
+import SearchFilter from '../component/SearchFilter';
 
 export default function Home() {
   const events = useAppSelector(selectEvent);
@@ -14,13 +14,10 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div>
-      <Header />
-      <Content>
-        {events.map((data, i) => (
-          <EventCard key={i} data={data} />
-        ))}
-      </Content>
-    </div>
+    <PageTemplate sidemenu={<SearchFilter />}>
+      {events.map((data, i) => (
+        <EventCard key={i} data={data} />
+      ))}
+    </PageTemplate>
   );
 }

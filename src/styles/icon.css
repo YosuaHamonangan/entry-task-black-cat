@@ -47,3 +47,8 @@
   -webkit-mask: url(../svg/like.svg) no-repeat center;
   mask: url(../svg/like.svg) no-repeat center;
 }
+
+.home {
+  -webkit-mask: url(../svg/home.svg) no-repeat center;
+  mask: url(../svg/home.svg) no-repeat center;
+}

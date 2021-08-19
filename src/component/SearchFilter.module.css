@@ -1,0 +1,65 @@
+.container {
+  width: 70vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 5em;
+}
+
+.filter {
+  width: calc(70vw - 1em);
+  padding: 0.5em;
+}
+
+.title {
+  display: block;
+  color: #ac8ec9;
+  margin: 1em;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.searchBtn {
+  font-size: 1.2em;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.5em;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+}
+
+.logo {
+  width: 1.2em;
+  height: 1.2em;
+  background: #666666;
+}
+
+.dateFilter,
+.channelFilter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dateFilter *,
+.channelFilter * {
+  font-size: 1.1em;
+  border: solid white 1px;
+  border-radius: 2em;
+  color: white;
+  padding: 0.4em 0.8em;
+  margin: 0.4em 0;
+}
+
+.dateFilter * {
+  font-weight: bold;
+  border: none;
+}
+
+.dateFilter *.selected {
+  background: #e5f7a9;
+  color: #453257;
+}
+
+.channelFilter * {
+  margin-right: 0.5em;
+}

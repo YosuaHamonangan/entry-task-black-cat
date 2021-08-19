@@ -10,6 +10,7 @@ enum iconStyles {
   check = 'check',
   likeOutline = 'like-outline',
   like = 'like',
+  home = 'home',
 }
 
 export default iconStyles;

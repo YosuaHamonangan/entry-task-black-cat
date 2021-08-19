@@ -1,3 +1,17 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 100vh;
+  overflow: hidden;
+}
+
+.sidemenu > div {
+  transition: width 0.5s;
+}
+
+.sidemenu.hide > div {
+  width: 0;
+}
+
 .header {
   width: 100vw;
   height: 3em;
@@ -15,12 +29,12 @@
   height: 100%;
 }
 
-.content {
+.main {
   width: 100vw;
   height: calc(100vh - 3em);
-  overflow: auto;
+  overflow: hidden auto;
 }
 
-.content > div {
+.content {
   padding: 1em;
 }
