@@ -1,0 +1,27 @@
+.searchHeader {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 1em;
+  padding: 1em;
+  margin: -1em;
+  margin-bottom: 1em;
+  background: #faf9fc;
+}
+
+.resultNum {
+  font-size: 1.3em;
+  color: #8560a9;
+  font-weight: bold;
+}
+
+.clearBtn {
+  background: #d5ef7f;
+  color: #67616d;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  border-radius: 3em;
+}
+
+.searchDesc {
+  grid-column: 1 / 3;
+}

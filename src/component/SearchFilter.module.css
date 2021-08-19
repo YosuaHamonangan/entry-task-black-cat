@@ -3,6 +3,7 @@
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 5em;
+  overflow: hidden;
 }
 
 .filter {
@@ -25,6 +26,12 @@
   grid-column-gap: 0.5em;
   align-items: center;
   justify-content: center;
+  background: #d5ef7f;
+  color: #453257;
+}
+
+.searchBtn:disabled {
+  background: #bababa;
   color: #666666;
 }
 
@@ -32,6 +39,10 @@
   width: 1.2em;
   height: 1.2em;
   background: #666666;
+}
+
+.searchBtn:disabled .logo {
+  background: #453257;
 }
 
 .dateFilter,
@@ -55,7 +66,8 @@
   border: none;
 }
 
-.dateFilter *.selected {
+.dateFilter *.selected,
+.channelFilter *.selected {
   background: #e5f7a9;
   color: #453257;
 }

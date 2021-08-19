@@ -1,15 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DateFilter } from '../enum/eventFilter';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { selectFilter, setDateFilter, setChannelFilter } from '../reducer/filter';
+import { hideSidemenu } from '../reducer/app';
 import styles from './SearchFilter.module.css';
+import { selectChannels, loadChannels } from '../reducer/event';
 
 export default function SearchFilter() {
-  const [selectedDate, setSelectedDate] = useState<DateFilter | null>(null);
+  const dispatch = useAppDispatch();
 
-  function onSelectDate(value: DateFilter | null) {
+  const currentFilter = useAppSelector(selectFilter);
+  const [selectedDate, setSelectedDate] = useState(currentFilter.date);
+
+  const channels = useAppSelector(selectChannels);
+  const [selectedChannels, setSelectedChannels] = useState(currentFilter.channels);
+
+  const disableSubmit = selectedDate === null || selectedChannels === null;
+
+  function onClickDate(value: DateFilter | null) {
     setSelectedDate(value);
   }
+
+  function onClickChannel(channel: string, selected: boolean) {
+    const newChannel = Array.isArray(selectedChannels) ? [...selectedChannels] : [];
+    const idx = newChannel.findIndex((ch) => ch === channel);
+
+    if (selected) {
+      if (idx !== -1) return;
+      newChannel.push(channel);
+    } else {
+      if (idx === -1) return;
+      newChannel.splice(idx, 1);
+      if (!newChannel.length) {
+        setSelectedChannels('all');
+        return;
+      }
+    }
+    setSelectedChannels(newChannel);
+  }
+
+  function selectAllChannel() {
+    setSelectedChannels('all');
+  }
+
+  function onSubmit() {
+    dispatch(setDateFilter({ date: selectedDate }));
+    dispatch(setChannelFilter({ channel: selectedChannels }));
+    dispatch(hideSidemenu());
+  }
+
+  useEffect(() => {
+    dispatch(loadChannels());
+  }, [dispatch]);
 
   return (
     <div className={`${styles.container} ${globalStyles.primaryDark}`}>
@@ -18,54 +62,66 @@ export default function SearchFilter() {
         <div className={styles.dateFilter}>
           <button
             className={selectedDate === DateFilter.anytime ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.anytime)}
+            onClick={() => onClickDate(DateFilter.anytime)}
           >
             ANYTIME
           </button>
           <button
             className={selectedDate === DateFilter.today ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.today)}
+            onClick={() => onClickDate(DateFilter.today)}
           >
             TODAY
           </button>
           <button
             className={selectedDate === DateFilter.tomorrow ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.tomorrow)}
+            onClick={() => onClickDate(DateFilter.tomorrow)}
           >
             TOMORROW
           </button>
           <button
             className={selectedDate === DateFilter.thisWeek ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.thisWeek)}
+            onClick={() => onClickDate(DateFilter.thisWeek)}
           >
             THIS WEEK
           </button>
           <button
             className={selectedDate === DateFilter.thisMonth ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.thisMonth)}
+            onClick={() => onClickDate(DateFilter.thisMonth)}
           >
             THIS MONTH
           </button>
           <button
             className={selectedDate === DateFilter.later ? styles.selected : ''}
-            onClick={() => onSelectDate(DateFilter.later)}
+            onClick={() => onClickDate(DateFilter.later)}
           >
             LATER
           </button>
         </div>
         <div className={styles.title}>CHANNEL</div>
         <div className={styles.channelFilter}>
-          <button>All</button>
-          <button>Channel 1</button>
-          <button>Channel 2</button>
-          <button>Channel 3</button>
-          <button>Channel 4</button>
-          <button>Channel 5</button>
+          <button
+            className={selectedChannels === 'all' ? styles.selected : ''}
+            onClick={() => selectAllChannel()}
+          >
+            All
+          </button>
+          {channels.map((channel, i) => {
+            const selected = !!selectedChannels?.includes(channel);
+            return (
+              <button
+                key={i}
+                className={selected ? styles.selected : ''}
+                onClick={() => onClickChannel(channel, !selected)}
+              >
+                {channel}
+              </button>
+            );
+          })}
         </div>
       </div>
-      <button className={`${styles.searchBtn} ${globalStyles.disabledBackground}`}>
+      <button onClick={onSubmit} className={styles.searchBtn} disabled={disableSubmit}>
         <div className={`${styles.logo} ${iconStyles.search}`} />
-        SEARCH
+        <div>SEARCH</div>
       </button>
     </div>
   );

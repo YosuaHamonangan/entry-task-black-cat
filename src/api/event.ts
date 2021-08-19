@@ -1,4 +1,5 @@
 import { IEventData } from '../interfaces/event';
+import { IReqGetEvents } from '../interfaces/req';
 
 const dummyData: IEventData[] = [
   {
@@ -39,6 +40,26 @@ const dummyData: IEventData[] = [
   },
 ];
 
-export async function getEvents(): Promise<IEventData[]> {
-  return JSON.parse(JSON.stringify(dummyData));
+export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
+  let data = dummyData;
+  const { filter } = req;
+
+  if (filter) {
+    data = data.filter((event) => {
+      let shown = true;
+      if (filter.channels) {
+        shown = shown && filter.channels.includes(event.channel);
+      }
+
+      return shown;
+    });
+  }
+
+  return JSON.parse(JSON.stringify(data));
+}
+
+export async function getChannels(): Promise<string[]> {
+  const map = new Map<string, boolean>();
+  dummyData.forEach(({ channel }) => map.set(channel, true));
+  return Array.from(map.keys());
 }
