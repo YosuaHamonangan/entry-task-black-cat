@@ -55,6 +55,11 @@ export default function SearchFilter() {
     dispatch(loadChannels());
   }, [dispatch]);
 
+  useEffect(() => {
+    setSelectedDate(currentFilter.date);
+    setSelectedChannels(currentFilter.channels);
+  }, [currentFilter]);
+
   return (
     <div className={`${styles.container} ${globalStyles.primaryDark}`}>
       <div className={styles.filter}>

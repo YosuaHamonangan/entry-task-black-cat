@@ -28,10 +28,15 @@ export const filterSlice = createSlice({
       state.channels = channel;
       state.isValid = state.date !== null && state.channels !== null;
     },
+    clearFilter: (state) => {
+      state.date = null;
+      state.channels = null;
+      state.isValid = false;
+    },
   },
 });
 
-export const { setDateFilter, setChannelFilter } = filterSlice.actions;
+export const { setDateFilter, setChannelFilter, clearFilter } = filterSlice.actions;
 
 export const selectFilter = (state: RootState) => state.filter;
 
