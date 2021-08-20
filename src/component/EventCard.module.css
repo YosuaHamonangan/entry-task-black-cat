@@ -45,6 +45,8 @@
   padding: 0.2em 0.8em;
   border: solid #8560a9 1px;
   border-radius: 1em;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .description {
