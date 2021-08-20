@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: auto 100vh;
+  grid-template-columns: auto 100vw;
   overflow: hidden;
 }
 
@@ -30,11 +30,7 @@
 }
 
 .main {
-  width: 100vw;
+  width: 100%;
   height: calc(100vh - 3em);
   overflow: hidden auto;
-}
-
-.content {
-  padding: 1em;
 }

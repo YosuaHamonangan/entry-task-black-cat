@@ -11,6 +11,7 @@ enum iconStyles {
   likeOutline = 'like-outline',
   like = 'like',
   home = 'home',
+  noActivity = 'no-activity',
 }
 
 export default iconStyles;

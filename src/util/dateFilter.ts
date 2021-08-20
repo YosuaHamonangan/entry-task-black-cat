@@ -27,11 +27,5 @@ export function getFilterDateRange(filter: DateFilter): { min: Date; max: Date }
       max.setDate(0);
       break;
   }
-
-  console.log(filter);
-  console.log('min', min);
-  console.log('max', max);
-  console.log('');
-
   return { min, max };
 }

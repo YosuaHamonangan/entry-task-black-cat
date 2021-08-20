@@ -62,7 +62,6 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 
       if (minDate && maxDate) {
         const startDate = new Date(event.start);
-        console.log(startDate);
         shown = shown && startDate >= minDate && startDate <= maxDate;
       }
 

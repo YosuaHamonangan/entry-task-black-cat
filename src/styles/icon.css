@@ -52,3 +52,8 @@
   -webkit-mask: url(../svg/home.svg) no-repeat center;
   mask: url(../svg/home.svg) no-repeat center;
 }
+
+.no-activity {
+  -webkit-mask: url(../svg/no-activity.svg) no-repeat center;
+  mask: url(../svg/no-activity.svg) no-repeat center;
+}

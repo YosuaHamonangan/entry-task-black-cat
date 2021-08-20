@@ -7,6 +7,7 @@ import { selectFilter, clearFilter } from '../reducer/filter';
 import SearchFilter from '../component/SearchFilter';
 import styles from './Home.module.css';
 import { getFilterDateRange } from '../util/dateFilter';
+import iconStyles from '../enum/iconStyles';
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   month: 'numeric',
@@ -39,21 +40,35 @@ export default function Home() {
 
   return (
     <PageTemplate sidemenu={<SearchFilter />}>
-      {filter.isValid && (
-        <div className={styles.searchHeader}>
-          <div className={styles.resultNum}>{events.length} Results</div>
-          <button className={styles.clearBtn} onClick={() => dispatch(clearFilter())}>
-            CLEAR SEARCH
-          </button>
-          <div className={styles.searchDesc}>
-            Searched for {filter.channels! === 'all' ? 'all channel' : filter.channels!.join(', ')}{' '}
-            Activities {minDate === maxDate ? `on ${minDate}` : `from ${minDate} to ${maxDate}`}
+      <div className={styles.container}>
+        {filter.isValid && (
+          <div className={styles.searchHeader}>
+            <div className={styles.resultNum}>{events.length} Results</div>
+            <button className={styles.clearBtn} onClick={() => dispatch(clearFilter())}>
+              CLEAR SEARCH
+            </button>
+            <div className={styles.searchDesc}>
+              Searched for{' '}
+              {filter.channels! === 'all' ? 'all channel' : filter.channels!.join(', ')} Activities{' '}
+              {minDate === maxDate ? `on ${minDate}` : `from ${minDate} to ${maxDate}`}
+            </div>
           </div>
-        </div>
-      )}
-      {events.map((data, i) => (
-        <EventCard key={i} data={data} />
-      ))}
+        )}
+        {events.length ? (
+          <div className={styles.list}>
+            {events.map((data, i) => (
+              <EventCard key={i} data={data} />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.noActivity}>
+            <div>
+              <div className={`${styles.noActivityIcon} ${iconStyles.noActivity}`} />
+              No activity found
+            </div>
+          </div>
+        )}
+      </div>
     </PageTemplate>
   );
 }

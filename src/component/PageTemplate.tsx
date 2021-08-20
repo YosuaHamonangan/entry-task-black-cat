@@ -25,9 +25,7 @@ export default function PageTemplate({ sidemenu, children }: any) {
             <div className={`${styles.logo} ${iconStyles.user} ${globalStyles.black}`} />
           </div>
         </header>
-        <main className={styles.main}>
-          <div className={styles.content}>{children}</div>
-        </main>
+        <main className={styles.main}>{children}</main>
       </div>
     </div>
   );
