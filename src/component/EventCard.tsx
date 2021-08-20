@@ -10,8 +10,18 @@ interface Iprops {
   data: IEventData;
 }
 
+const dateOptions: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+};
+
 export default function EventCard({ data }: Iprops) {
   const dispatch = useAppDispatch();
+  const start = new Date(data.start).toLocaleDateString('en-GB', dateOptions).replace(',', '');
+  const end = new Date(data.end).toLocaleDateString('en-GB', dateOptions).replace(',', '');
 
   return (
     <div className={styles.card}>
@@ -20,16 +30,16 @@ export default function EventCard({ data }: Iprops) {
         <div>{data.username}</div>
         <div className={styles.channel}>{data.channel}</div>
       </div>
-      <h3 className={styles.title}>{data.title}</h3>
+      <h2 className={styles.title}>{data.title}</h2>
       <div className={styles.date}>
         <div className={`${styles.dateIcon} ${iconStyles.time} ${globalStyles.primary}`} />
         <span className={globalStyles.textPrimary}>
-          {new Date(data.start).toDateString()} - {new Date(data.end).toDateString()}
+          {start} - {end}
         </span>
       </div>
-      <div className={globalStyles.textPrimaryNeutral}>{data.description}</div>
+      <div className={styles.description}>{data.description}</div>
       <div className={styles.footer}>
-        {data.isGoing ? (
+        {data.is_going ? (
           <button
             className={styles.button}
             onClick={() => {
@@ -50,7 +60,7 @@ export default function EventCard({ data }: Iprops) {
             <span className={globalStyles.textPrimary}>{data.going || 0} Going</span>
           </button>
         )}
-        {data.isLiked ? (
+        {data.is_liked ? (
           <button
             className={styles.button}
             onClick={() => {

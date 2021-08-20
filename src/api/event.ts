@@ -1,44 +1,25 @@
 import { IEventData } from '../interfaces/event';
 import { IReqGetEvents } from '../interfaces/req';
+import faker from 'faker';
 
-const dummyData: IEventData[] = [
-  {
-    id: '1',
-    username: 'username',
-    channel: 'channel',
-    title: 'Activity Title Name Make it Longer May Longer than One Line',
-    start: new Date(),
-    end: new Date(),
-    description:
-      '[No longer than 300 chars] Vivamus sagittis, diam in lobortis, sapien arcu mattis erat, vel aliquet sem urna et risus. Ut feugiat sapien mi potenti...',
-    isGoing: true,
-    isLiked: true,
-  },
-  {
-    id: '2',
-    username: 'username 2',
-    channel: 'Channel name longer',
-    title: 'Activity Title Name Make it Longer May Longer than One Line',
-    start: new Date(),
-    end: new Date(),
-    description:
-      '[No longer than 300 chars] Vivamus sagittis, diam in lobortis, sapien arcu mattis erat, vel aliquet sem urna et risus. Ut feugiat sapien mi potenti...',
-    going: 6,
-    likes: 10,
-  },
-  {
-    id: '3',
-    username: 'username',
-    channel: 'channel',
-    title: 'Activity Title Name Make it Longer May Longer than One Line',
-    start: new Date(),
-    end: new Date(),
-    description:
-      '[No longer than 300 chars] Vivamus sagittis, diam in lobortis, sapien arcu mattis erat, vel aliquet sem urna et risus. Ut feugiat sapien mi potenti...',
-    isGoing: true,
-    isLiked: true,
-  },
-];
+faker.seed(123);
+const dummyData: IEventData[] = [];
+for (let i = 0; i < 10; i++) {
+  const start = faker.date.future(0);
+  dummyData.push({
+    id: faker.datatype.uuid(),
+    username: faker.internet.userName(),
+    channel: faker.company.companyName().slice(0, 20),
+    title: faker.lorem.sentence(),
+    start,
+    end: faker.date.future(0, start),
+    description: faker.lorem.paragraphs(),
+    going: faker.datatype.number(),
+    is_going: faker.datatype.boolean(),
+    likes: faker.datatype.number(),
+    is_liked: faker.datatype.boolean(),
+  });
+}
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyData;

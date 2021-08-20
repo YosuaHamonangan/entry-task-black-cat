@@ -6,8 +6,8 @@ export interface IEventData {
   start: Date;
   end: Date;
   description: string;
-  isGoing?: boolean;
-  isLiked?: boolean;
   going?: number;
+  is_going?: boolean;
   likes?: number;
+  is_liked?: boolean;
 }
