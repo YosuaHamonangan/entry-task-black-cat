@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 export enum DateFilter {
-  anytime,
-  today,
-  tomorrow,
-  thisWeek,
-  thisMonth,
-  later,
+  anytime = 'anytime',
+  today = 'today',
+  tomorrow = 'tomorrow',
+  thisWeek = 'thisWeek',
+  thisMonth = 'thisMonth',
+  later = 'later',
 }

@@ -3,8 +3,8 @@ export interface IEventData {
   username: string;
   channel: string;
   title: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   description: string;
   going?: number;
   is_going?: boolean;
