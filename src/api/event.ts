@@ -4,12 +4,16 @@ import faker from 'faker';
 
 faker.seed(123);
 const dummyData: IEventData[] = [];
+const channels: string[] = [];
+for (let i = 0; i < 3; i++) {
+  channels.push(faker.company.companyName().slice(0, 20));
+}
 for (let i = 0; i < 10; i++) {
   const start = faker.date.future(0);
   dummyData.push({
     id: faker.datatype.uuid(),
     username: faker.internet.userName(),
-    channel: faker.company.companyName().slice(0, 20),
+    channel: channels[faker.datatype.number(channels.length - 1)],
     title: faker.lorem.sentence(),
     start,
     end: faker.date.future(0, start),
