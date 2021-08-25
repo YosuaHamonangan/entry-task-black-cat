@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import { IEventData } from '../interfaces/event';
@@ -24,7 +25,7 @@ export default function EventCard({ data }: Iprops) {
   const end = new Date(data.end).toLocaleDateString('en-GB', dateOptions).replace(',', '');
 
   return (
-    <div className={styles.card}>
+    <Link to="event" className={styles.card}>
       <div className={styles.header}>
         <div className={`${styles.userPicture} ${iconStyles.user} ${globalStyles.black}`} />
         <div>{data.username}</div>
@@ -83,6 +84,6 @@ export default function EventCard({ data }: Iprops) {
         )}
         <div />
       </div>
-    </div>
+    </Link>
   );
 }
