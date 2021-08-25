@@ -1,8 +1,7 @@
-import { DateFilter } from '../enum/eventFilter';
-
 export interface IReqGetEvents {
   filter?: {
-    date?: DateFilter;
+    from?: string;
+    to?: string;
     channels?: string[];
   };
 }

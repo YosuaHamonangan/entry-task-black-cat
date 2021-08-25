@@ -1,14 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { getEvents, getChannels } from '../api/event';
-import { IEventData } from '../interfaces/event';
-import { IFilterState } from './filter';
 import { IReqGetEvents } from '../interfaces/req';
-
-export interface IEventState {
-  list: IEventData[];
-  channels: string[];
-}
+import { IEventState, IFilterState } from '../interfaces/state';
+import { getFilterDateRange } from '../util/eventFilter';
 
 const initialState: IEventState = {
   list: [],
@@ -18,8 +13,10 @@ const initialState: IEventState = {
 export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IFilterState) => {
   const req: IReqGetEvents = {};
   if (filter?.isValid) {
+    const range = getFilterDateRange(filter);
     req.filter = {
-      date: filter.date!,
+      from: range?.from.toString(),
+      to: range?.to.toString(),
       channels: filter.channels !== 'all' ? filter.channels! : undefined,
     };
   }

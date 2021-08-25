@@ -1,5 +1,5 @@
 .container {
-  width: 70vw;
+  width: 80vw;
   height: 100vh;
   display: grid;
   grid-template-rows: 1fr 5em;
@@ -7,7 +7,7 @@
 }
 
 .filter {
-  width: calc(70vw - 1em);
+  width: calc(80vw - 1em);
   padding: 0.5em;
 }
 
@@ -17,22 +17,27 @@
   margin: 1em;
   text-decoration: underline;
   font-weight: bold;
+  text-align: center;
 }
 
 .searchBtn {
+  background: #d5ef7f;
+}
+
+.searchBtn:disabled {
+  background: #bababa;
+  color: #666666;
+}
+
+.searchLabel {
   font-size: 1.2em;
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 0.5em;
   align-items: center;
   justify-content: center;
-  background: #d5ef7f;
   color: #453257;
-}
-
-.searchBtn:disabled {
-  background: #bababa;
-  color: #666666;
+  font-weight: bold;
 }
 
 .logo {
@@ -45,33 +50,104 @@
   background: #453257;
 }
 
+.summary {
+  margin-top: 0.5em;
+  color: #8560a9;
+}
+
 .dateFilter,
 .channelFilter {
   display: flex;
   flex-wrap: wrap;
 }
 
-.dateFilter *,
-.channelFilter * {
-  font-size: 1.1em;
+.dateFilter > button,
+.channelFilter > button {
+  font-size: 0.95em;
   border: solid white 1px;
   border-radius: 2em;
   color: white;
-  padding: 0.4em 0.8em;
+  padding: 0.4em 0.6em;
   margin: 0.4em 0;
 }
 
-.dateFilter * {
-  font-weight: bold;
+.break {
+  flex-basis: 100%;
+}
+
+.dateFilter > button {
   border: none;
 }
 
-.dateFilter *.selected,
-.channelFilter *.selected {
+.dateFilter > button.selected,
+.channelFilter > button.selected {
   background: #e5f7a9;
   color: #453257;
 }
 
-.channelFilter * {
+.channelFilter > button {
   margin-right: 0.5em;
+}
+
+.dateInputs {
+  width: 100%;
+  white-space: nowrap;
+  margin-top: 0.5em;
+}
+
+.dateInputs input {
+  width: calc(50% - 1em);
+  border: 0;
+  margin: 0;
+  padding: 0.5em;
+  background: white;
+  outline: none;
+  font-size: 1.2em;
+  color: #8560a9;
+}
+
+.dateInputs ::-webkit-datetime-edit {
+  width: 50%;
+  padding: 0;
+  margin-left: 1.2em;
+}
+
+.dateInputs input:focus::-webkit-datetime-edit-fields-wrapper {
+  background: #d5ef7f;
+}
+
+input::-webkit-datetime-edit-day-field,
+input::-webkit-datetime-edit-month-field,
+input::-webkit-datetime-edit-year-field {
+  background: none;
+}
+
+.dateInputs input::-webkit-calendar-picker-indicator {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.dateInputs .minDate::-webkit-calendar-picker-indicator {
+  background: #d5ef7f;
+  -webkit-mask: url(../svg/date-from.svg) no-repeat center;
+  mask: url(../svg/date-from.svg) no-repeat center;
+}
+
+.dateInputs .maxDate::-webkit-calendar-picker-indicator {
+  background: #d5ef7f;
+  -webkit-mask: url(../svg/date-to.svg) no-repeat center;
+  mask: url(../svg/date-to.svg) no-repeat center;
+}
+
+.dateInputs::before {
+  content: '';
+  background: white;
+  position: absolute;
+  display: block;
+  width: 0.8em;
+  height: 0.8em;
+  transform: translate(1em, -0.4em) rotate(45deg);
 }

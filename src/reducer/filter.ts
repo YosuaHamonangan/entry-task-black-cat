@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { DateFilter } from '../enum/eventFilter';
-
-export interface IFilterState {
-  date: DateFilter | null;
-  channels: 'all' | string[] | null;
-  isValid: boolean;
-}
+import { IFilterState } from '../interfaces/state';
+import { validateFilter } from '../util/eventFilter';
 
 const initialState: IFilterState = {
   date: null,
   channels: null,
   isValid: false,
+  from: null,
+  to: null,
 };
 
 export const filterSlice = createSlice({
@@ -21,12 +19,16 @@ export const filterSlice = createSlice({
     setDateFilter: (state, action: PayloadAction<{ date: DateFilter | null }>) => {
       const { date } = action.payload;
       state.date = date;
-      state.isValid = state.date !== null && state.channels !== null;
+      state.isValid = validateFilter(state);
     },
-    setChannelFilter: (state, action: PayloadAction<{ channel: 'all' | string[] | null }>) => {
-      const { channel } = action.payload;
-      state.channels = channel;
-      state.isValid = state.date !== null && state.channels !== null;
+    setChannelFilter: (state, action: PayloadAction<{ channels: 'all' | string[] | null }>) => {
+      const { channels } = action.payload;
+      state.channels = channels;
+      state.isValid = validateFilter(state);
+    },
+    setFilter: (state, action: PayloadAction<IFilterState>) => {
+      Object.assign(state, action.payload);
+      state.isValid = validateFilter(state);
     },
     clearFilter: (state) => {
       state.date = null;
@@ -36,7 +38,7 @@ export const filterSlice = createSlice({
   },
 });
 
-export const { setDateFilter, setChannelFilter, clearFilter } = filterSlice.actions;
+export const { setDateFilter, setChannelFilter, setFilter, clearFilter } = filterSlice.actions;
 
 export const selectFilter = (state: RootState) => state.filter;
 

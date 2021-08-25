@@ -1,36 +1,30 @@
 import { IEventData } from '../interfaces/event';
 import { IReqGetEvents } from '../interfaces/req';
 import faker from 'faker';
-import { getFilterDateRange } from '../util/dateFilter';
 
 faker.seed(123);
 const channels: string[] = [];
 for (let i = 0; i < 3; i++) {
   channels.push(faker.company.companyName().slice(0, 20));
 }
-const dummyData: IEventData[] = [
-  {
-    id: faker.datatype.uuid(),
-    username: faker.internet.userName(),
-    channel: channels[faker.datatype.number(channels.length - 1)],
-    title: 'Test Data',
-    start: 'Wed Aug 21 2021 15:00:00 GMT+0700 (Western Indonesia Time)',
-    end: 'Wed Aug 22 2022 18:00:00 GMT+0700 (Western Indonesia Time)',
-    description: faker.lorem.paragraphs(),
-    going: faker.datatype.number(),
-    is_going: faker.datatype.boolean(),
-    likes: faker.datatype.number(),
-    is_liked: faker.datatype.boolean(),
-  },
-];
 
+const dummyData: IEventData[] = [];
+const titles = ['Today Event', 'Tomorow Event', 'Next Week Event'];
+const deltaStart = [0, 1, 7];
 for (let i = 0; i < 10; i++) {
-  const start = faker.date.future(0);
+  let title = titles[i];
+
+  let start = faker.date.future(0);
+  if (deltaStart[i] !== undefined) {
+    start = new Date();
+    start.setDate(start.getDate() + deltaStart[i]);
+  }
+
   dummyData.push({
     id: faker.datatype.uuid(),
     username: faker.internet.userName(),
     channel: channels[faker.datatype.number(channels.length - 1)],
-    title: faker.lorem.sentence(),
+    title: title || faker.lorem.sentence(),
     start: start.toString(),
     end: faker.date.future(0, start).toString(),
     description: faker.lorem.paragraphs(),
@@ -45,18 +39,10 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyData;
   const { filter } = req;
 
-  let minDate: Date | null = null;
-  let maxDate: Date | null = null;
-
-  if (filter?.date) {
-    const range = getFilterDateRange(filter.date);
-    if (range) {
-      minDate = range.min;
-      maxDate = range.max;
-    }
-  }
-
   if (filter) {
+    const minDate = filter.from ? new Date(filter.from) : null;
+    const maxDate = filter.to ? new Date(filter.to) : null;
+
     data = data.filter((event) => {
       let shown = true;
 

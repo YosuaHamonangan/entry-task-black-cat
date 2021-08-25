@@ -3,28 +3,42 @@ import { DateFilter } from '../enum/eventFilter';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { selectFilter, setDateFilter, setChannelFilter } from '../reducer/filter';
+import { selectFilter, setFilter } from '../reducer/filter';
 import { hideSidemenu } from '../reducer/app';
 import styles from './SearchFilter.module.css';
 import { selectChannels, loadChannels } from '../reducer/event';
+import { getFilterSummary, validateFilter } from '../util/eventFilter';
+import { IFilterState } from '../interfaces/state';
 
 export default function SearchFilter() {
   const dispatch = useAppDispatch();
 
-  const currentFilter = useAppSelector(selectFilter);
-  const [selectedDate, setSelectedDate] = useState(currentFilter.date);
-
   const channels = useAppSelector(selectChannels);
-  const [selectedChannels, setSelectedChannels] = useState(currentFilter.channels);
+  const currentFilter = useAppSelector(selectFilter);
+  const [selectedFilter, setSelectedFilter] = useState<IFilterState>({
+    date: null,
+    channels: null,
+    isValid: false,
+  });
 
-  const disableSubmit = selectedDate === null || selectedChannels === null;
+  function updateSelectedFilter(value: {
+    date?: DateFilter | null;
+    channels?: 'all' | string[] | null;
+    from?: string | null;
+    to?: string | null;
+  }) {
+    const nextState: IFilterState = { ...selectedFilter, ...value };
+    nextState.isValid = validateFilter(nextState);
+    setSelectedFilter(nextState);
+  }
 
   function onClickDate(value: DateFilter | null) {
-    setSelectedDate(value);
+    updateSelectedFilter({ date: value });
   }
 
   function onClickChannel(channel: string, selected: boolean) {
-    const newChannel = Array.isArray(selectedChannels) ? [...selectedChannels] : [];
+    const selectedChannels = selectedFilter.channels;
+    let newChannel: 'all' | string[] = Array.isArray(selectedChannels) ? [...selectedChannels] : [];
     const idx = newChannel.findIndex((ch) => ch === channel);
 
     if (selected) {
@@ -34,20 +48,19 @@ export default function SearchFilter() {
       if (idx === -1) return;
       newChannel.splice(idx, 1);
       if (!newChannel.length) {
-        setSelectedChannels('all');
-        return;
+        newChannel = 'all';
       }
     }
-    setSelectedChannels(newChannel);
+
+    updateSelectedFilter({ channels: newChannel });
   }
 
   function selectAllChannel() {
-    setSelectedChannels('all');
+    updateSelectedFilter({ channels: 'all' });
   }
 
   function onSubmit() {
-    dispatch(setDateFilter({ date: selectedDate }));
-    dispatch(setChannelFilter({ channel: selectedChannels }));
+    dispatch(setFilter(selectedFilter));
     dispatch(hideSidemenu());
   }
 
@@ -56,10 +69,10 @@ export default function SearchFilter() {
   }, [dispatch]);
 
   useEffect(() => {
-    setSelectedDate(currentFilter.date);
-    setSelectedChannels(currentFilter.channels);
+    setSelectedFilter(currentFilter);
   }, [currentFilter]);
 
+  const { date: selectedDate, channels: selectedChannels, isValid } = selectedFilter;
   return (
     <div className={`${styles.container} ${globalStyles.primaryDark}`}>
       <div className={styles.filter}>
@@ -95,12 +108,33 @@ export default function SearchFilter() {
           >
             THIS MONTH
           </button>
+          <div className={styles.break} />
           <button
             className={selectedDate === DateFilter.later ? styles.selected : ''}
             onClick={() => onClickDate(DateFilter.later)}
           >
             LATER
           </button>
+          {selectedDate === DateFilter.later && (
+            <div className={styles.dateInputs}>
+              <input
+                type="date"
+                className={styles.minDate}
+                onChange={(evt) => {
+                  updateSelectedFilter({ from: evt.target.value });
+                }}
+                value={selectedFilter.from || ''}
+              />
+              <input
+                type="date"
+                className={styles.maxDate}
+                onChange={(evt) => {
+                  updateSelectedFilter({ to: evt.target.value });
+                }}
+                value={selectedFilter.to || ''}
+              />
+            </div>
+          )}
         </div>
         <div className={styles.title}>CHANNEL</div>
         <div className={styles.channelFilter}>
@@ -124,9 +158,12 @@ export default function SearchFilter() {
           })}
         </div>
       </div>
-      <button onClick={onSubmit} className={styles.searchBtn} disabled={disableSubmit}>
-        <div className={`${styles.logo} ${iconStyles.search}`} />
-        <div>SEARCH</div>
+      <button onClick={onSubmit} className={styles.searchBtn} disabled={!isValid}>
+        <div className={styles.searchLabel}>
+          <div className={`${styles.logo} ${iconStyles.search}`} />
+          <div>SEARCH</div>
+        </div>
+        {isValid && <div className={styles.summary}>{getFilterSummary(selectedFilter)}</div>}
       </button>
     </div>
   );
