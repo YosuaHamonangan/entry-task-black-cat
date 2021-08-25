@@ -10,6 +10,10 @@ const initialState: IEventState = {
   channels: [],
 };
 
+export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
+  return await getEvents({ id });
+});
+
 export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IFilterState) => {
   const req: IReqGetEvents = {};
   if (filter?.isValid) {
@@ -44,6 +48,10 @@ export const eventSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(loadEvent.fulfilled, (state, action) => {
+      state.list = state.list.concat(action.payload);
+    });
+
     builder.addCase(loadEvents.fulfilled, (state, action) => {
       state.list = action.payload;
     });

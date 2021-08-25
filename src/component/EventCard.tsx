@@ -25,7 +25,7 @@ export default function EventCard({ data }: Iprops) {
   const end = new Date(data.end).toLocaleDateString('en-GB', dateOptions).replace(',', '');
 
   return (
-    <Link to="event" className={styles.card}>
+    <Link to={`event/${data.id}`} className={styles.card}>
       <div className={styles.header}>
         <div className={`${styles.userPicture} ${iconStyles.user} ${globalStyles.black}`} />
         <div>{data.username}</div>

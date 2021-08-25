@@ -39,6 +39,10 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyData;
   const { filter } = req;
 
+  if (req.id) {
+    data = data.filter((event) => event.id === req.id);
+  }
+
   if (filter) {
     const minDate = filter.from ? new Date(filter.from) : null;
     const maxDate = filter.to ? new Date(filter.to) : null;
