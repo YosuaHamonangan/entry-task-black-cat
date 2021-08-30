@@ -10,6 +10,7 @@
 }
 
 .title {
+  color: #453257;
   font-weight: 400;
 }
 
@@ -76,6 +77,31 @@
   width: 100%;
   border-radius: 1em;
   margin-bottom: 1em;
+}
+
+.users {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+  align-items: center;
+}
+
+.userList {
+  margin: 1em 0;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  justify-items: center;
+  align-items: center;
+  background: #8560a9;
+}
+
+.join {
+  background: #d5ef7f;
+  padding: 1em 4em;
+  color: #788c36;
 }
 
 .header {

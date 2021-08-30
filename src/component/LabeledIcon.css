@@ -1,4 +1,8 @@
 .labeled-icon {
+  display: inline-block;
+}
+
+.labeled-icon > span {
   display: grid;
   grid-auto-flow: column;
   align-items: center;

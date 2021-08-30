@@ -18,15 +18,17 @@ interface IProps {
 export default function LabeledIcon(props: IProps) {
   return (
     <div className={`labeled-icon ${props.className || ''}`}>
-      <Icon
-        className="icon"
-        icon={props.icon}
-        color={props.iconColor}
-        width={props.iconWidth}
-        height={props.iconHeight}
-      />
-      <span className="label" style={{ fontSize: props.textSize, marginLeft: props.gap }}>
-        {props.text}
+      <span>
+        <Icon
+          className="icon"
+          icon={props.icon}
+          color={props.iconColor}
+          width={props.iconWidth}
+          height={props.iconHeight}
+        />
+        <span className="label" style={{ fontSize: props.textSize, marginLeft: props.gap }}>
+          {props.text}
+        </span>
       </span>
     </div>
   );

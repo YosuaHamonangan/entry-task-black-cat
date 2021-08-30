@@ -123,14 +123,35 @@ export default function Event() {
               <img className={styles.map} src={event.coordinate} alt="location" />
             </div>
 
-            <div className={`${styles.marginSide} ${styles.borderBottom}`}>
-              <Icon icon={iconStyles.checkOutline} width="1.5em" height="1.5em" />
-              34 going
-            </div>
+            <div className={`${styles.marginSide} ${styles.borderBottom} ${styles.users}`}>
+              <LabeledIcon
+                icon={iconStyles.checkOutline}
+                iconWidth="1.5em"
+                iconHeight="1.5em"
+                gap="0.5em"
+                text={`${34} going`}
+              />
+              <div className={styles.userList}>
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+              </div>
 
-            <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-              <Icon icon={iconStyles.likeOutline} width="1.5em" height="1.5em" />
-              34 likes
+              <div className={styles.borderBottom} />
+              <div className={styles.borderBottom} />
+
+              <LabeledIcon
+                icon={iconStyles.likeOutline}
+                iconWidth="1.5em"
+                iconHeight="1.5em"
+                gap="0.5em"
+                text={`${34} likes`}
+              />
+              <div className={styles.userList}>
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+                <Icon icon={iconStyles.user} width="2em" height="2em" />
+              </div>
             </div>
 
             <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
@@ -144,6 +165,24 @@ export default function Event() {
                   </div>
                 </span>
               </div>
+            </div>
+            <div className={styles.footer}>
+              <button onClick={() => console.log('comment')}>
+                <Icon icon={iconStyles.noActivity} width="2em" height="2em" />
+              </button>
+              <button onClick={() => console.log('like')}>
+                <Icon icon={iconStyles.likeOutline} width="2em" height="2em" />
+              </button>
+              <button className={styles.join} onClick={() => console.log('join')}>
+                <LabeledIcon
+                  icon={iconStyles.checkOutline}
+                  iconColor={globalStyles.complementDark2}
+                  iconWidth="2em"
+                  iconHeight="2em"
+                  gap="0.5em"
+                  text="Join"
+                />
+              </button>
             </div>
           </>
         )}
