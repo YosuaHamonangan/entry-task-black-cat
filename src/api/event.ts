@@ -32,6 +32,10 @@ for (let i = 0; i < 10; i++) {
     is_going: faker.datatype.boolean(),
     likes: faker.datatype.number(),
     is_liked: faker.datatype.boolean(),
+    published: faker.date.recent().toString(),
+    location: faker.address.secondaryAddress(),
+    address: `${faker.address.streetAddress()}, ${faker.address.countryCode()}`,
+    coordinate: '/image/gmap.png',
   });
 }
 

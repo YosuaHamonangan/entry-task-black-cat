@@ -12,6 +12,9 @@ enum iconStyles {
   like = 'like',
   home = 'home',
   noActivity = 'no-activity',
+  dateFrom = 'date-from',
+  dateTo = 'date-to',
+  people = 'people',
 }
 
 export default iconStyles;

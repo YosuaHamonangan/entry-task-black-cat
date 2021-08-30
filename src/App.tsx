@@ -4,25 +4,16 @@ import Home from './page/Home';
 import Login from './page/Login';
 import Event from './page/Event';
 import Page404 from './page/404';
-import './App.css';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/event/:id">
-            <Event />
-          </Route>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="*">
-            <Page404 />
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/event/:id" component={Event} />
+          <Route path="/" exact component={Home} />
+          <Route path="*" component={Page404} />
         </Switch>
       </Router>
     </div>

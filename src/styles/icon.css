@@ -1,59 +1,89 @@
 .password {
+  display: inline-block;
   -webkit-mask: url(../svg/password.svg) no-repeat center;
   mask: url(../svg/password.svg) no-repeat center;
 }
 
 .email {
+  display: inline-block;
   -webkit-mask: url(../svg/user.svg) no-repeat center;
   mask: url(../svg/user.svg) no-repeat center;
 }
 
 .logo-cat {
+  display: inline-block;
   -webkit-mask: url(../svg/logo-cat.svg) no-repeat center;
   mask: url(../svg/logo-cat.svg) no-repeat center;
 }
 
 .search {
+  display: inline-block;
   -webkit-mask: url(../svg/search.svg) no-repeat center;
   mask: url(../svg/search.svg) no-repeat center;
 }
 
 .user {
+  display: inline-block;
   -webkit-mask: url(../svg/user.svg) no-repeat center;
   mask: url(../svg/user.svg) no-repeat center;
 }
 
 .time {
+  display: inline-block;
   -webkit-mask: url(../svg/time.svg) no-repeat center;
   mask: url(../svg/time.svg) no-repeat center;
 }
 
 .check-outline {
+  display: inline-block;
   -webkit-mask: url(../svg/check-outline.svg) no-repeat center;
   mask: url(../svg/check-outline.svg) no-repeat center;
 }
 
 .check {
+  display: inline-block;
   -webkit-mask: url(../svg/check.svg) no-repeat center;
   mask: url(../svg/check.svg) no-repeat center;
 }
 
 .like-outline {
+  display: inline-block;
   -webkit-mask: url(../svg/like-outline.svg) no-repeat center;
   mask: url(../svg/like-outline.svg) no-repeat center;
 }
 
 .like {
+  display: inline-block;
   -webkit-mask: url(../svg/like.svg) no-repeat center;
   mask: url(../svg/like.svg) no-repeat center;
 }
 
 .home {
+  display: inline-block;
   -webkit-mask: url(../svg/home.svg) no-repeat center;
   mask: url(../svg/home.svg) no-repeat center;
 }
 
 .no-activity {
+  display: inline-block;
   -webkit-mask: url(../svg/no-activity.svg) no-repeat center;
   mask: url(../svg/no-activity.svg) no-repeat center;
+}
+
+.date-from {
+  display: inline-block;
+  -webkit-mask: url(../svg/date-from.svg) no-repeat center;
+  mask: url(../svg/date-from.svg) no-repeat center;
+}
+
+.date-to {
+  display: inline-block;
+  -webkit-mask: url(../svg/date-to.svg) no-repeat center;
+  mask: url(../svg/date-to.svg) no-repeat center;
+}
+
+.people {
+  display: inline-block;
+  -webkit-mask: url(../svg/people.svg) no-repeat center;
+  mask: url(../svg/people.svg) no-repeat center;
 }

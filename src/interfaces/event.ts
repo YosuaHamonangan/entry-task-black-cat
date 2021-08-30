@@ -10,4 +10,8 @@ export interface IEventData {
   is_going?: boolean;
   likes?: number;
   is_liked?: boolean;
+  published: string;
+  address: string;
+  location: string;
+  coordinate: string;
 }
