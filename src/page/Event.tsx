@@ -34,12 +34,12 @@ export default function Event() {
         {event && (
           <>
             <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-              <div className={styles.channel}>{event.channel}</div>
+              <div className={styles.channel}>{event.channel.name}</div>
               <h2 className={styles.title}>{event.title}</h2>
               <div>
                 <Icon className={styles.userPicture} icon={iconStyles.user} />
                 <div className={styles.userDetail}>
-                  <div className={styles.username}>{event.username}</div>
+                  <div className={styles.username}>{event.user.username}</div>
                   <div className={styles.published}>Published 2 days ago</div>
                 </div>
               </div>

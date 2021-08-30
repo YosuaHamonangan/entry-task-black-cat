@@ -1,5 +1,5 @@
 import { DateFilter } from '../enum/eventFilter';
-import { IEventData } from './event';
+import { IEventData } from './res';
 
 export interface IFilterState {
   date: DateFilter | null;

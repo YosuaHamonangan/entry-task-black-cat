@@ -1,46 +1,9 @@
-import { IEventData } from '../interfaces/event';
+import { IEventData, IParticipantsData } from '../interfaces/res';
 import { IReqGetEvents } from '../interfaces/req';
-import faker from 'faker';
-
-faker.seed(123);
-const channels: string[] = [];
-for (let i = 0; i < 3; i++) {
-  channels.push(faker.company.companyName().slice(0, 20));
-}
-
-const dummyData: IEventData[] = [];
-const titles = ['Today Event', 'Tomorow Event', 'Next Week Event'];
-const deltaStart = [0, 1, 7];
-for (let i = 0; i < 10; i++) {
-  let title = titles[i];
-
-  let start = faker.date.future(0);
-  if (deltaStart[i] !== undefined) {
-    start = new Date();
-    start.setDate(start.getDate() + deltaStart[i]);
-  }
-
-  dummyData.push({
-    id: faker.datatype.uuid(),
-    username: faker.internet.userName(),
-    channel: channels[faker.datatype.number(channels.length - 1)],
-    title: title || faker.lorem.sentence(),
-    start: start.toString(),
-    end: faker.date.future(0, start).toString(),
-    description: faker.lorem.paragraphs(),
-    going: faker.datatype.number(),
-    is_going: faker.datatype.boolean(),
-    likes: faker.datatype.number(),
-    is_liked: faker.datatype.boolean(),
-    published: faker.date.recent().toString(),
-    location: faker.address.secondaryAddress(),
-    address: `${faker.address.streetAddress()}, ${faker.address.countryCode()}`,
-    coordinate: '/image/gmap.png',
-  });
-}
+import { dummyEvents } from './dummyDb';
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
-  let data = dummyData;
+  let data = dummyEvents;
   const { filter } = req;
 
   if (req.id) {
@@ -60,7 +23,7 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
       }
 
       if (filter.channels) {
-        shown = shown && filter.channels.includes(event.channel);
+        shown = shown && filter.channels.includes(event.channel.id);
       }
 
       return shown;
@@ -72,6 +35,12 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 
 export async function getChannels(): Promise<string[]> {
   const map = new Map<string, boolean>();
-  dummyData.forEach(({ channel }) => map.set(channel, true));
+  dummyEvents.forEach(({ channel }) => map.set(channel.id, true));
   return Array.from(map.keys());
+}
+
+// eslint-disable-next-line no-unused-vars
+export async function getParticipants(eventId: string): Promise<IParticipantsData> {
+  const res: IParticipantsData = { likes: [], going: [] };
+  return res;
 }

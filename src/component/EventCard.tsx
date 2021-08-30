@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
-import { IEventData } from '../interfaces/event';
+import { IEventData } from '../interfaces/res';
 import styles from './EventCard.module.css';
 import { useAppDispatch } from '../app/hooks';
 import { setIsGoing, setIsLiked } from '../reducer/event';
@@ -28,8 +28,8 @@ export default function EventCard({ data }: Iprops) {
     <Link to={`event/${data.id}`} className={styles.card}>
       <div className={styles.header}>
         <div className={`${styles.userPicture} ${iconStyles.user} ${globalStyles.black}`} />
-        <div>{data.username}</div>
-        <div className={styles.channel}>{data.channel}</div>
+        <div>{data.user.username}</div>
+        <div className={styles.channel}>{data.channel.name}</div>
       </div>
       <h2 className={styles.title}>{data.title}</h2>
       <div className={styles.date}>
