@@ -87,3 +87,9 @@
   -webkit-mask: url(../svg/people.svg) no-repeat center;
   mask: url(../svg/people.svg) no-repeat center;
 }
+
+.reply {
+  display: inline-block;
+  -webkit-mask: url(../svg/reply.svg) no-repeat center;
+  mask: url(../svg/reply.svg) no-repeat center;
+}

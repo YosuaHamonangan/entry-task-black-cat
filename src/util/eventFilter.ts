@@ -53,7 +53,10 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 };
 export function getFilterSummary(filter: IFilterState): string {
   if (!filter.isValid) return '';
-  const channelsStr = filter.channels! === 'all' ? 'all channel' : filter.channels!.join(', ');
+  const channelsStr =
+    filter.channels! === 'all'
+      ? 'all channel'
+      : filter.channels!.map(({ name }) => name).join(', ');
   let dateStr = '';
 
   if (filter.date === DateFilter.anytime) {

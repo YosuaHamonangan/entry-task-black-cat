@@ -1,6 +1,6 @@
-import { IEventData, IParticipantsData } from '../interfaces/res';
-import { IReqGetEvents } from '../interfaces/req';
-import { dummyEvents } from './dummyDb';
+import { IChannelData, ICommentData, IEventData, IParticipantsData } from '../interfaces/res';
+import { IReqGetEvents, IReqGetComments } from '../interfaces/req';
+import { dummyEvents, dummyCommentData, dummyChannels } from './dummyDb';
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyEvents;
@@ -33,10 +33,13 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   return JSON.parse(JSON.stringify(data));
 }
 
-export async function getChannels(): Promise<string[]> {
-  const map = new Map<string, boolean>();
-  dummyEvents.forEach(({ channel }) => map.set(channel.id, true));
-  return Array.from(map.keys());
+export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
+  const data = dummyCommentData.filter(({ event }) => event.id === req.eventId);
+  return data;
+}
+
+export async function getChannels(): Promise<IChannelData[]> {
+  return dummyChannels;
 }
 
 // eslint-disable-next-line no-unused-vars

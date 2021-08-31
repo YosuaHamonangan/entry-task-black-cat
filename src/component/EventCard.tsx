@@ -1,37 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import { IEventData } from '../interfaces/res';
 import styles from './EventCard.module.css';
 import { useAppDispatch } from '../app/hooks';
-import { setIsGoing, setIsLiked } from '../reducer/event';
+import { setIsGoing, setIsLiked, setCurrentEvent } from '../reducer/event';
+import { getDateTimeString } from '../util/date';
 
 interface Iprops {
   data: IEventData;
 }
 
-const dateOptions: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-};
-
 export default function EventCard({ data }: Iprops) {
+  const history = useHistory();
+
   const dispatch = useAppDispatch();
-  const start = new Date(data.start).toLocaleDateString('en-GB', dateOptions).replace(',', '');
-  const end = new Date(data.end).toLocaleDateString('en-GB', dateOptions).replace(',', '');
+  const start = getDateTimeString(data.start);
+  const end = getDateTimeString(data.end);
+
+  function onClick() {
+    dispatch(setCurrentEvent(data));
+    history.push(`event/${data.id}`);
+  }
 
   return (
-    <Link to={`event/${data.id}`} className={styles.card}>
+    <div className={styles.card}>
       <div className={styles.header}>
-        <div className={`${styles.userPicture} ${iconStyles.user} ${globalStyles.black}`} />
+        <img className={styles.userPicture} src={data.user.picture} alt="profile" />
+
         <div>{data.user.username}</div>
         <div className={styles.channel}>{data.channel.name}</div>
       </div>
-      <h2 className={styles.title}>{data.title}</h2>
+      <button onClick={onClick}>
+        <h2 className={styles.title}>{data.title}</h2>
+      </button>
       <div className={styles.date}>
         <div className={`${styles.dateIcon} ${iconStyles.time} ${globalStyles.primary}`} />
         <span className={globalStyles.textPrimary}>
@@ -84,6 +87,6 @@ export default function EventCard({ data }: Iprops) {
         )}
         <div />
       </div>
-    </Link>
+    </div>
   );
 }

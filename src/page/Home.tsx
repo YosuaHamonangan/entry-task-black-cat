@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <PageTemplate sidemenu={<SearchFilter />}>
       <div className={styles.container}>
-        {filter.isValid && (
+        {filter.isValid && events && (
           <div className={styles.searchHeader}>
             <div className={styles.resultNum}>{events.length} Results</div>
             <button className={styles.clearBtn} onClick={() => dispatch(clearFilter())}>
@@ -31,7 +31,7 @@ export default function Home() {
             <div className={styles.searchDesc}>Searched for {getFilterSummary(filter)}</div>
           </div>
         )}
-        {events.length ? (
+        {events?.length ? (
           <div className={styles.list}>
             {events.map((data, i) => (
               <EventCard key={i} data={data} />

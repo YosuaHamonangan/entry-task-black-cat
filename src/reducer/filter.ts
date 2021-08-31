@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { DateFilter } from '../enum/eventFilter';
+import { IChannelData } from '../interfaces/res';
 import { IFilterState } from '../interfaces/state';
 import { validateFilter } from '../util/eventFilter';
 
@@ -21,7 +22,10 @@ export const filterSlice = createSlice({
       state.date = date;
       state.isValid = validateFilter(state);
     },
-    setChannelFilter: (state, action: PayloadAction<{ channels: 'all' | string[] | null }>) => {
+    setChannelFilter: (
+      state,
+      action: PayloadAction<{ channels: 'all' | IChannelData[] | null }>,
+    ) => {
       const { channels } = action.payload;
       state.channels = channels;
       state.isValid = validateFilter(state);

@@ -26,6 +26,7 @@
 .userPicture {
   width: 1.5em;
   height: 1.5em;
+  border-radius: 1.5em;
 }
 
 .date {

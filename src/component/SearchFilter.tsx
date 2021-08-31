@@ -9,6 +9,7 @@ import styles from './SearchFilter.module.css';
 import { selectChannels, loadChannels } from '../reducer/event';
 import { getFilterSummary, validateFilter } from '../util/eventFilter';
 import { IFilterState } from '../interfaces/state';
+import { IChannelData } from '../interfaces/res';
 
 export default function SearchFilter() {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ export default function SearchFilter() {
 
   function updateSelectedFilter(value: {
     date?: DateFilter | null;
-    channels?: 'all' | string[] | null;
+    channels?: 'all' | IChannelData[] | null;
     from?: string | null;
     to?: string | null;
   }) {
@@ -36,9 +37,11 @@ export default function SearchFilter() {
     updateSelectedFilter({ date: value });
   }
 
-  function onClickChannel(channel: string, selected: boolean) {
+  function onClickChannel(channel: IChannelData, selected: boolean) {
     const selectedChannels = selectedFilter.channels;
-    let newChannel: 'all' | string[] = Array.isArray(selectedChannels) ? [...selectedChannels] : [];
+    let newChannel: 'all' | IChannelData[] = Array.isArray(selectedChannels)
+      ? [...selectedChannels]
+      : [];
     const idx = newChannel.findIndex((ch) => ch === channel);
 
     if (selected) {
@@ -144,15 +147,15 @@ export default function SearchFilter() {
           >
             All
           </button>
-          {channels.map((channel, i) => {
-            const selected = !!selectedChannels?.includes(channel);
+          {channels?.map((channel, i) => {
+            const selected = selectedChannels === 'all' || !!selectedChannels?.includes(channel);
             return (
               <button
                 key={i}
                 className={selected ? styles.selected : ''}
                 onClick={() => onClickChannel(channel, !selected)}
               >
-                {channel}
+                {channel.name}
               </button>
             );
           })}

@@ -15,6 +15,7 @@ enum iconStyles {
   dateFrom = 'date-from',
   dateTo = 'date-to',
   people = 'people',
+  reply = 'reply',
 }
 
 export default iconStyles;

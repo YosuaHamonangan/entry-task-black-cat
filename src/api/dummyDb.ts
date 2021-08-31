@@ -17,7 +17,7 @@ for (let i = 0; i < 10; i++) {
     username: faker.internet.userName(),
     email: `user${i}@email.com`,
     password: '123456',
-    picture: faker.image.people(),
+    picture: faker.image.avatar(),
   });
 }
 

@@ -1,33 +1,41 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { loadEvent, selectEvents } from '../reducer/event';
+import {
+  loadEvent,
+  loadComments,
+  selectCurrentEvent,
+  selectCurrentComments,
+} from '../reducer/event';
 import PageTemplate from '../component/PageTemplate';
 import Icon from '../component/Icon';
 import styles from './Event.module.css';
 import iconStyles from '../enum/iconStyles';
 import globalStyles from '../enum/globalStyles';
 import LabeledIcon from '../component/LabeledIcon';
-
-const dateOptions: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-};
+import Comments from '../component/Comments';
+import { getFullDateString, getTimeString } from '../util/date';
 
 export default function Event() {
   const dispatch = useAppDispatch();
 
-  let { id } = useParams<{ id: string }>();
-  const events = useAppSelector(selectEvents);
-  const event = events.find((event) => event.id === id);
+  const { id } = useParams<{ id: string }>();
+  let event = useAppSelector(selectCurrentEvent);
+  let comments = useAppSelector(selectCurrentComments);
+
+  if (event?.id !== id) {
+    event = null;
+  }
+
+  if (comments && comments[0]?.event.id !== id) {
+    comments = null;
+  }
 
   useEffect(() => {
-    if (event) return;
-    dispatch(loadEvent(id));
-  }, [dispatch, id, event]);
+    if (!event) dispatch(loadEvent(id));
+    if (!comments) dispatch(loadComments(id));
+  }, [dispatch, id, event, comments]);
 
-  const start = event ? new Date(event.start) : null;
   return (
     <PageTemplate>
       <div className={styles.container}>
@@ -88,14 +96,10 @@ export default function Event() {
                     iconWidth="1em"
                     iconHeight="1em"
                     gap="0.5em"
-                    text={start!.toLocaleDateString('en-gb', dateOptions)}
+                    text={getFullDateString(event.start)}
                   />
                   <div className={styles.startTime}>
-                    {start!
-                      .toLocaleTimeString('en-us', {
-                        hour: 'numeric',
-                        minute: 'numeric',
-                      })
+                    {getTimeString(event.start)
                       .split(' ')
                       .map((str, i) => (
                         <span key={i}>{str}</span>
@@ -110,7 +114,7 @@ export default function Event() {
                     iconWidth="1em"
                     iconHeight="1em"
                     gap="0.5em"
-                    text={new Date(event.end).toLocaleDateString('en-gb', dateOptions)}
+                    text={getFullDateString(event.end!)}
                   />
                 </div>
               </div>
@@ -155,16 +159,7 @@ export default function Event() {
             </div>
 
             <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-              <div>
-                <Icon icon={iconStyles.likeOutline} width="1.5em" height="1.5em" />
-                <span>
-                  <div>Little Prince</div>
-                  <div>
-                    Nullam ut tincidunt nunc. Petus lacus, commodo eget justo ut, rutrum varius
-                    nunc.
-                  </div>
-                </span>
-              </div>
+              {comments && <Comments comments={comments} />}
             </div>
             <div className={styles.footer}>
               <button onClick={() => console.log('comment')}>

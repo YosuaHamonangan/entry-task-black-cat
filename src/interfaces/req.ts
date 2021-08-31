@@ -6,3 +6,7 @@ export interface IReqGetEvents {
     channels?: string[];
   };
 }
+
+export interface IReqGetComments {
+  eventId?: string;
+}
