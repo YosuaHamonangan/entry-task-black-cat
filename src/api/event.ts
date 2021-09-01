@@ -1,6 +1,12 @@
 import { IChannelData, ICommentData, IEventData, IParticipantsData } from '../interfaces/res';
-import { IReqGetEvents, IReqGetComments } from '../interfaces/req';
-import { dummyEvents, dummyCommentData, dummyChannels } from './dummyDb';
+import { IReqGetEvents, IReqGetComments, IReqGetParticipants } from '../interfaces/req';
+import {
+  dummyEvents,
+  dummyCommentData,
+  dummyChannels,
+  dummyGoingData,
+  dummyLikeData,
+} from './dummyDb';
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyEvents;
@@ -30,20 +36,34 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
     });
   }
 
-  return JSON.parse(JSON.stringify(data));
+  return data.map<IEventData>((ev) => {
+    const goingData = dummyGoingData.filter(({ event }) => event.id === ev.id);
+    const likeData = dummyLikeData.filter(({ event }) => event.id === ev.id);
+    return {
+      ...JSON.parse(JSON.stringify(ev)),
+      going: goingData.length,
+      likes: likeData.length,
+    };
+  });
 }
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
   const data = dummyCommentData.filter(({ event }) => event.id === req.eventId);
-  return data;
+  return JSON.parse(JSON.stringify(data));
 }
 
 export async function getChannels(): Promise<IChannelData[]> {
-  return dummyChannels;
+  return JSON.parse(JSON.stringify(dummyChannels));
 }
 
 // eslint-disable-next-line no-unused-vars
-export async function getParticipants(eventId: string): Promise<IParticipantsData> {
-  const res: IParticipantsData = { likes: [], going: [] };
-  return res;
+export async function getParticipants(req: IReqGetParticipants): Promise<IParticipantsData> {
+  return {
+    likes: dummyGoingData
+      .filter(({ event }) => event.id === req.eventId)
+      .map(({ user }) => JSON.parse(JSON.stringify(user))),
+    going: dummyLikeData
+      .filter(({ event }) => event.id === req.eventId)
+      .map(({ user }) => JSON.parse(JSON.stringify(user))),
+  };
 }

@@ -19,14 +19,14 @@ export interface IEventData {
   start: string;
   end: string;
   description: string;
-  going?: number;
-  is_going?: boolean;
-  likes?: number;
-  is_liked?: boolean;
   published: string;
   address: string;
   location: string;
   coordinate: string;
+  going?: number;
+  is_going?: boolean;
+  likes?: number;
+  is_liked?: boolean;
 }
 
 export interface ICommentData {
@@ -47,6 +47,6 @@ export interface IGoingData {
 }
 
 export interface IParticipantsData {
-  going: string[];
-  likes: string[];
+  going: IUserData[];
+  likes: IUserData[];
 }

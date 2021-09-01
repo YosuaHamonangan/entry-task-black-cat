@@ -49,10 +49,6 @@ for (let i = 0; i < 10; i++) {
     start: start.toString(),
     end: faker.date.future(0, start).toString(),
     description: faker.lorem.paragraphs(),
-    going: faker.datatype.number(),
-    is_going: faker.datatype.boolean(),
-    likes: faker.datatype.number(),
-    is_liked: faker.datatype.boolean(),
     published: faker.date.recent().toString(),
     location: faker.address.secondaryAddress(),
     address: `${faker.address.streetAddress()}, ${faker.address.countryCode()}`,
@@ -75,7 +71,7 @@ dummyEvents.forEach((event) => {
 export const dummyLikeData: ILikeData[] = [];
 dummyEvents.forEach((event) => {
   const users: IUserData[] = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < faker.datatype.number(dummyUsers.length - 1); i++) {
     const user = dummyUsers[faker.datatype.number(dummyUsers.length - 1)];
     if (!users.includes(user)) users.push(user);
   }
@@ -86,7 +82,7 @@ dummyEvents.forEach((event) => {
 export const dummyGoingData: IGoingData[] = [];
 dummyEvents.forEach((event) => {
   const users: IUserData[] = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < faker.datatype.number(dummyUsers.length - 1); i++) {
     const user = dummyUsers[faker.datatype.number(dummyUsers.length - 1)];
     if (!users.includes(user)) users.push(user);
   }
