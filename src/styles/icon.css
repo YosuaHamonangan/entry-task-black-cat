@@ -93,3 +93,9 @@
   -webkit-mask: url(../svg/reply.svg) no-repeat center;
   mask: url(../svg/reply.svg) no-repeat center;
 }
+
+.comment-outline {
+  display: inline-block;
+  -webkit-mask: url(../svg/comment-outline.svg) no-repeat center;
+  mask: url(../svg/comment-outline.svg) no-repeat center;
+}

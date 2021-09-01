@@ -1,3 +1,19 @@
+.tab {
+  font-size: 0.9em;
+}
+
+.tab.selected {
+  color: #aecb4f;
+}
+
+.tabContent {
+  display: none;
+}
+
+.tabContent.selected {
+  display: block;
+}
+
 .channel {
   display: inline-block;
   color: #8560a9;
