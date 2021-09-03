@@ -12,13 +12,12 @@ import {
 import PageTemplate from '../../component/PageTemplate';
 import Icon from '../../component/Icon';
 import iconStyles from '../../enum/iconStyles';
-import globalStyles from '../../enum/globalStyles';
-import LabeledIcon from '../../component/LabeledIcon';
 import { getTimeDiffString } from '../../util/date';
 import DetailTab from './tabs/DetailTab';
 import styles from './Event.module.css';
 import ParticipantsTab from './tabs/ParticipantsTab';
 import CommentsTab from './tabs/CommentsTab';
+import Tabs from '../../component/Tabs';
 
 // eslint-disable-next-line no-unused-vars
 enum TABS {
@@ -62,7 +61,7 @@ export default function Event() {
       <div className={styles.container}>
         {event && comments && participants && (
           <>
-            <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
+            <div className={styles.header}>
               <div className={styles.channel}>{event.channel.name}</div>
               <h2 className={styles.title}>{event.title}</h2>
               <div>
@@ -76,7 +75,27 @@ export default function Event() {
               </div>
             </div>
 
-            <Tabs onSelect={(tab) => setSelectedTab(tab)} selected={selectedTab} />
+            <Tabs
+              onSelect={(tab) => setSelectedTab(tab)}
+              selected={selectedTab}
+              tabsInfo={[
+                {
+                  key: TABS.DETAIL,
+                  icon: iconStyles.user,
+                  text: 'Details',
+                },
+                {
+                  key: TABS.PARTICIPANTS,
+                  icon: iconStyles.people,
+                  text: 'Participants',
+                },
+                {
+                  key: TABS.COMMENTS,
+                  icon: iconStyles.commentOutline,
+                  text: 'Comments',
+                },
+              ]}
+            />
             <DetailTab
               selected={selectedTab === TABS.DETAIL}
               event={event}
@@ -84,69 +103,10 @@ export default function Event() {
               participants={participants}
             />
             <ParticipantsTab selected={selectedTab === TABS.PARTICIPANTS} />
-            <CommentsTab selected={selectedTab === TABS.COMMENTS} />
+            <CommentsTab selected={selectedTab === TABS.COMMENTS} comments={comments} />
           </>
         )}
       </div>
     </PageTemplate>
-  );
-}
-
-function Tabs(props: {
-  selected: TABS;
-  // eslint-disable-next-line no-unused-vars
-  onSelect: (tab: TABS) => void;
-}) {
-  const { onSelect, selected } = props;
-  return (
-    <div className={`${styles.paddingSide} ${styles.borderBottom} ${styles.sections}`}>
-      <button
-        className={`${styles.tab} ${selected === TABS.DETAIL ? styles.selected : ''}`}
-        onClick={() => onSelect(TABS.DETAIL)}
-      >
-        <LabeledIcon
-          icon={iconStyles.user}
-          iconColor={selected === TABS.DETAIL ? globalStyles.complementDark1 : globalStyles.black}
-          iconWidth="1.5em"
-          iconHeight="1.5em"
-          gap="0.5em"
-          text="Details"
-        />
-      </button>
-
-      <div className={styles.sectionsSeparator} />
-
-      <button
-        className={`${styles.tab} ${selected === TABS.PARTICIPANTS ? styles.selected : ''}`}
-        onClick={() => onSelect(TABS.PARTICIPANTS)}
-      >
-        <LabeledIcon
-          icon={iconStyles.people}
-          iconColor={
-            selected === TABS.PARTICIPANTS ? globalStyles.complementDark1 : globalStyles.black
-          }
-          iconWidth="1.5em"
-          iconHeight="1.5em"
-          gap="0.5em"
-          text="Participants"
-        />
-      </button>
-
-      <div className={styles.sectionsSeparator} />
-
-      <button
-        className={`${styles.tab} ${selected === TABS.COMMENTS ? styles.selected : ''}`}
-        onClick={() => onSelect(TABS.COMMENTS)}
-      >
-        <LabeledIcon
-          icon={iconStyles.commentOutline}
-          iconColor={selected === TABS.COMMENTS ? globalStyles.complementDark1 : globalStyles.black}
-          iconWidth="1.5em"
-          iconHeight="1.5em"
-          gap="0.5em"
-          text="Comments"
-        />
-      </button>
-    </div>
   );
 }

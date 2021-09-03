@@ -8,14 +8,16 @@ import globalStyles from '../../../enum/globalStyles';
 import iconStyles from '../../../enum/iconStyles';
 import { IEventData, ICommentData, IParticipantsData } from '../../../interfaces/res';
 import { getFullDateString, getTimeString } from '../../../util/date';
-import styles from '../Event.module.css';
+import styles from './DetailTab.module.css';
 
-export default function DetailTab(props: {
+interface IProps {
   event: IEventData;
   comments: ICommentData[];
   participants: IParticipantsData;
   selected: boolean;
-}) {
+}
+
+export default function DetailTab(props: IProps) {
   const { event, comments, selected, participants } = props;
   return (
     <TabContent selected={selected}>
@@ -24,7 +26,7 @@ export default function DetailTab(props: {
       </div>
 
       <div className={`${styles.marginSide} ${styles.borderBottom}`}>
-        <div className={styles.header}>When</div>
+        <div className={styles.headerTitle}>When</div>
         <div className={styles.sections}>
           <div>
             <LabeledIcon
@@ -96,8 +98,9 @@ export default function DetailTab(props: {
       </div>
 
       <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-        {<Comments comments={comments} />}
+        <Comments comments={comments} />
       </div>
+
       <div className={styles.footer}>
         <button onClick={() => console.log('comment')}>
           <Icon icon={iconStyles.noActivity} width="2em" height="2em" />

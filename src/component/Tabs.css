@@ -1,0 +1,21 @@
+.tabs {
+  display: grid;
+  grid-auto-flow: column;
+  justify-items: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: solid #e8e8e8 1px;
+  border-top: solid #e8e8e8 1px;
+}
+
+.tab-item {
+  font-size: 0.9em;
+}
+
+.tab-item.selected {
+  color: #aecb4f;
+}
+
+.tab-separator {
+  border-right: solid #e8e8e8 1px;
+}
