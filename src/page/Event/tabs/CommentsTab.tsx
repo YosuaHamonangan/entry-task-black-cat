@@ -1,8 +1,7 @@
 import React from 'react';
 import Comments from '../../../component/Comments';
-import Icon from '../../../component/Icon';
+import { CommentFooter } from '../../../component/Footer';
 import TabContent from '../../../component/TabContent';
-import iconStyles from '../../../enum/iconStyles';
 import { ICommentData } from '../../../interfaces/res';
 import styles from '../Event.module.css';
 
@@ -19,17 +18,7 @@ export default function CommentsTab(props: IProps) {
         <Comments comments={comments} />
       </div>
 
-      <div className={styles.footer}>
-        <button onClick={() => console.log('comment')}>
-          <Icon icon={iconStyles.noActivity} width="2em" height="2em" />
-        </button>
-        <button onClick={() => console.log('like')}>
-          <Icon icon={iconStyles.likeOutline} width="2em" height="2em" />
-        </button>
-        <button className={styles.join} onClick={() => console.log('join')}>
-          weads
-        </button>
-      </div>
+      <CommentFooter />
     </TabContent>
   );
 }

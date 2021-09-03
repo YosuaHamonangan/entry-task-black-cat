@@ -1,6 +1,6 @@
 import React from 'react';
 import Comments from '../../../component/Comments';
-import Icon from '../../../component/Icon';
+import { JoinFooter } from '../../../component/Footer';
 import LabeledIcon from '../../../component/LabeledIcon';
 import ProfilePicture from '../../../component/ProfilePicture';
 import TabContent from '../../../component/TabContent';
@@ -101,24 +101,7 @@ export default function DetailTab(props: IProps) {
         <Comments comments={comments} />
       </div>
 
-      <div className={styles.footer}>
-        <button onClick={() => console.log('comment')}>
-          <Icon icon={iconStyles.noActivity} width="2em" height="2em" />
-        </button>
-        <button onClick={() => console.log('like')}>
-          <Icon icon={iconStyles.likeOutline} width="2em" height="2em" />
-        </button>
-        <button className={styles.join} onClick={() => console.log('join')}>
-          <LabeledIcon
-            icon={iconStyles.checkOutline}
-            iconColor={globalStyles.complementDark2}
-            iconWidth="2em"
-            iconHeight="2em"
-            gap="0.5em"
-            text="Join"
-          />
-        </button>
-      </div>
+      <JoinFooter />
     </TabContent>
   );
 }

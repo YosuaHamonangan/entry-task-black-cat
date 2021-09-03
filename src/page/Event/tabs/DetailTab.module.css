@@ -53,20 +53,6 @@
   margin: 1em 0;
 }
 
-.footer {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  justify-items: center;
-  align-items: center;
-  background: #8560a9;
-}
-
-.join {
-  background: #d5ef7f;
-  padding: 1em 4em;
-  color: #788c36;
-}
-
 .headerTitle {
   color: #8560a9;
   font-size: 1.3em;

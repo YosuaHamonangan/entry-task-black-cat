@@ -1,0 +1,46 @@
+.joinFooter,
+.commentFooter {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background: #8560a9;
+  height: 4em;
+}
+
+.joinFooter {
+  grid-template-columns: 1fr 1fr 9em;
+}
+
+.join {
+  background: #d5ef7f;
+  color: #788c36;
+  height: 100%;
+  width: 100%;
+}
+
+.commentFooter {
+  grid-template-columns: 3em 1fr 5em;
+}
+
+.commentInput {
+  width: 100%;
+}
+
+.commentInput input {
+  width: calc(100% - 3em);
+  height: 2.5em;
+  border-radius: 2.5em;
+  outline: none;
+  border: none;
+  padding: 0 1em;
+}
+.commentInput input::placeholder {
+  color: #d3c1e5;
+}
+
+.send {
+  background: #d5ef7f;
+  color: #788c36;
+  height: 100%;
+  width: 100%;
+}

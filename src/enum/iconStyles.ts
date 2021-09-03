@@ -17,6 +17,8 @@ enum iconStyles {
   people = 'people',
   reply = 'reply',
   commentOutline = 'comment-outline',
+  send = 'send',
+  cross = 'cross',
 }
 
 export default iconStyles;
