@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
-import Event from './page/Event';
+import Event from './page/Event/index';
 import Page404 from './page/404';
 
 function App() {
