@@ -8,9 +8,9 @@ export interface IReqGetEvents {
 }
 
 export interface IReqGetComments {
-  eventId?: string;
+  eventId: string;
 }
 
 export interface IReqGetParticipants {
-  eventId?: string;
+  eventId: string;
 }

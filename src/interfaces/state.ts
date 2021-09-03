@@ -1,5 +1,5 @@
 import { DateFilter } from '../enum/eventFilter';
-import { IEventData, ICommentData, IChannelData } from './res';
+import { IEventData, ICommentData, IChannelData, IParticipantsData } from './res';
 
 export interface IFilterState {
   date: DateFilter | null;
@@ -14,4 +14,5 @@ export interface IEventState {
   channels: IChannelData[] | null;
   current: IEventData | null;
   comments: ICommentData[] | null;
+  participants: IParticipantsData | null;
 }

@@ -59,6 +59,7 @@ export async function getChannels(): Promise<IChannelData[]> {
 // eslint-disable-next-line no-unused-vars
 export async function getParticipants(req: IReqGetParticipants): Promise<IParticipantsData> {
   return {
+    eventId: req.eventId,
     likes: dummyGoingData
       .filter(({ event }) => event.id === req.eventId)
       .map(({ user }) => JSON.parse(JSON.stringify(user))),

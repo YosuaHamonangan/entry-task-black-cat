@@ -47,6 +47,7 @@ export interface IGoingData {
 }
 
 export interface IParticipantsData {
+  eventId: string;
   going: IUserData[];
   likes: IUserData[];
 }

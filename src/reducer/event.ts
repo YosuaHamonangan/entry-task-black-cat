@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { getEvents, getChannels, getComments } from '../api/event';
+import { getEvents, getChannels, getComments, getParticipants } from '../api/event';
 import { IReqGetEvents } from '../interfaces/req';
 import { IEventState, IFilterState } from '../interfaces/state';
 import { getFilterDateRange } from '../util/eventFilter';
@@ -11,6 +11,7 @@ const initialState: IEventState = {
   channels: null,
   current: null,
   comments: null,
+  participants: null,
 };
 
 export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
@@ -20,6 +21,13 @@ export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) =
 export const loadComments = createAsyncThunk('event/getComment', async (eventId: string) => {
   return await getComments({ eventId });
 });
+
+export const loadParticipants = createAsyncThunk(
+  'event/getParticipants',
+  async (eventId: string) => {
+    return await getParticipants({ eventId });
+  },
+);
 
 export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IFilterState) => {
   const req: IReqGetEvents = {};
@@ -77,6 +85,10 @@ export const eventSlice = createSlice({
     builder.addCase(loadComments.fulfilled, (state, action) => {
       state.comments = action.payload;
     });
+
+    builder.addCase(loadParticipants.fulfilled, (state, action) => {
+      state.participants = action.payload;
+    });
   },
 });
 
@@ -86,5 +98,6 @@ export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;
 export const selectEvents = (state: RootState) => state.event.list;
 export const selectChannels = (state: RootState) => state.event.channels;
+export const selectParticipants = (state: RootState) => state.event.participants;
 
 export default eventSlice.reducer;

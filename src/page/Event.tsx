@@ -4,8 +4,10 @@ import { useAppSelector, useAppDispatch } from '../app/hooks';
 import {
   loadEvent,
   loadComments,
+  loadParticipants,
   selectCurrentEvent,
   selectCurrentComments,
+  selectParticipants,
 } from '../reducer/event';
 import PageTemplate from '../component/PageTemplate';
 import Icon from '../component/Icon';
@@ -15,7 +17,8 @@ import globalStyles from '../enum/globalStyles';
 import LabeledIcon from '../component/LabeledIcon';
 import Comments from '../component/Comments';
 import { getFullDateString, getTimeString, getTimeDiffString } from '../util/date';
-import { ICommentData, IEventData } from '../interfaces/res';
+import { ICommentData, IEventData, IParticipantsData } from '../interfaces/res';
+import ProfilePicture from '../component/ProfilePicture';
 
 // eslint-disable-next-line no-unused-vars
 enum TABS {
@@ -34,6 +37,7 @@ export default function Event() {
   const { id } = useParams<{ id: string }>();
   let event = useAppSelector(selectCurrentEvent);
   let comments = useAppSelector(selectCurrentComments);
+  let participants = useAppSelector(selectParticipants);
 
   if (event?.id !== id) {
     event = null;
@@ -43,15 +47,20 @@ export default function Event() {
     comments = null;
   }
 
+  if (participants && participants.eventId !== id) {
+    participants = null;
+  }
+
   useEffect(() => {
     if (!event) dispatch(loadEvent(id));
     if (!comments) dispatch(loadComments(id));
-  }, [dispatch, id, event, comments]);
+    if (!participants) dispatch(loadParticipants(id));
+  }, [dispatch, id, event, comments, participants]);
 
   return (
     <PageTemplate>
       <div className={styles.container}>
-        {event && comments && (
+        {event && comments && participants && (
           <>
             <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
               <div className={styles.channel}>{event.channel.name}</div>
@@ -68,7 +77,12 @@ export default function Event() {
             </div>
 
             <Tabs onSelect={(tab) => setSelectedTab(tab)} selected={selectedTab} />
-            <DetailTab selected={selectedTab === TABS.DETAIL} event={event} comments={comments} />
+            <DetailTab
+              selected={selectedTab === TABS.DETAIL}
+              event={event}
+              comments={comments}
+              participants={participants}
+            />
             <ParticipantsTab selected={selectedTab === TABS.PARTICIPANTS} />
             <CommentsTab selected={selectedTab === TABS.COMMENTS} />
           </>
@@ -144,8 +158,13 @@ function TabContent(props: { selected: boolean; children: any }) {
   );
 }
 
-function DetailTab(props: { event: IEventData; comments: ICommentData[]; selected: boolean }) {
-  const { event, comments, selected } = props;
+function DetailTab(props: {
+  event: IEventData;
+  comments: ICommentData[];
+  participants: IParticipantsData;
+  selected: boolean;
+}) {
+  const { event, comments, selected, participants } = props;
   return (
     <TabContent selected={selected}>
       <div className={`${styles.marginSide} ${styles.borderBottom}`}>
@@ -199,12 +218,12 @@ function DetailTab(props: { event: IEventData; comments: ICommentData[]; selecte
           iconWidth="1.5em"
           iconHeight="1.5em"
           gap="0.5em"
-          text={`${34} going`}
+          text={`${participants.going.length} going`}
         />
         <div className={styles.userList}>
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
+          {participants.going.map(({ picture }, i) => (
+            <ProfilePicture key={i} src={picture} size="2em" />
+          ))}
         </div>
 
         <div className={styles.borderBottom} />
@@ -215,12 +234,12 @@ function DetailTab(props: { event: IEventData; comments: ICommentData[]; selecte
           iconWidth="1.5em"
           iconHeight="1.5em"
           gap="0.5em"
-          text={`${34} likes`}
+          text={`${participants.likes.length} likes`}
         />
         <div className={styles.userList}>
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
-          <Icon icon={iconStyles.user} width="2em" height="2em" />
+          {participants.likes.map(({ picture }, i) => (
+            <ProfilePicture key={i} src={picture} size="2em" />
+          ))}
         </div>
       </div>
 
