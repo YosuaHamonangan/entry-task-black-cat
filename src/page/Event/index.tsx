@@ -17,7 +17,7 @@ import LabeledIcon from '../../component/LabeledIcon';
 import { getTimeDiffString } from '../../util/date';
 import DetailTab from './tabs/DetailTab';
 import styles from './Event.module.css';
-import ParticipantsTab from './tabs/ParticipantTab';
+import ParticipantsTab from './tabs/ParticipantsTab';
 import CommentsTab from './tabs/CommentsTab';
 
 // eslint-disable-next-line no-unused-vars
