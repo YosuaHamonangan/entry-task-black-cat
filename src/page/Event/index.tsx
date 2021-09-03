@@ -102,7 +102,11 @@ export default function Event() {
               comments={comments}
               participants={participants}
             />
-            <ParticipantsTab selected={selectedTab === TABS.PARTICIPANTS} />
+            <ParticipantsTab
+              selected={selectedTab === TABS.PARTICIPANTS}
+              comments={comments}
+              participants={participants}
+            />
             <CommentsTab selected={selectedTab === TABS.COMMENTS} comments={comments} />
           </>
         )}

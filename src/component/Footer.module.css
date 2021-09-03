@@ -8,7 +8,7 @@
 }
 
 .joinFooter {
-  grid-template-columns: 1fr 1fr 9em;
+  grid-template-columns: 1fr 1fr 45%;
 }
 
 .join {

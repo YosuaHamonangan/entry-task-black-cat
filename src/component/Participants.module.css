@@ -1,0 +1,16 @@
+.participants {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+  align-items: center;
+  padding: 0 1em;
+}
+
+.userList {
+  margin: 1em 0;
+}
+
+.separator {
+  grid-column: 1 / 3;
+  border-bottom: solid #e8e8e8 1px;
+}

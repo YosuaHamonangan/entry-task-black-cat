@@ -2,7 +2,8 @@ import React from 'react';
 import Comments from '../../../component/Comments';
 import { JoinFooter } from '../../../component/Footer';
 import LabeledIcon from '../../../component/LabeledIcon';
-import ProfilePicture from '../../../component/ProfilePicture';
+import Participants from '../../../component/Participants';
+import { HorizontalSeparator, VerticalSeparator } from '../../../component/Separator';
 import TabContent from '../../../component/TabContent';
 import globalStyles from '../../../enum/globalStyles';
 import iconStyles from '../../../enum/iconStyles';
@@ -21,13 +22,13 @@ export default function DetailTab(props: IProps) {
   const { event, comments, selected, participants } = props;
   return (
     <TabContent selected={selected}>
-      <div className={`${styles.marginSide} ${styles.borderBottom}`}>
+      <div className={styles.details}>
         <div className={styles.description}>{event.description}</div>
-      </div>
 
-      <div className={`${styles.marginSide} ${styles.borderBottom}`}>
+        <HorizontalSeparator />
+
         <div className={styles.headerTitle}>When</div>
-        <div className={styles.sections}>
+        <div className={styles.time}>
           <div>
             <LabeledIcon
               icon={iconStyles.dateFrom}
@@ -45,7 +46,9 @@ export default function DetailTab(props: IProps) {
                 ))}
             </div>
           </div>
-          <div className={styles.sectionsSeparator} />
+
+          <VerticalSeparator />
+
           <div>
             <LabeledIcon
               icon={iconStyles.dateTo}
@@ -57,49 +60,19 @@ export default function DetailTab(props: IProps) {
             />
           </div>
         </div>
-      </div>
 
-      <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-        <div className={styles.header}>Where</div>
+        <HorizontalSeparator />
+
+        <div className={styles.headerTitle}>Where</div>
         <div className={styles.location}>{event.location}</div>
         <div className={styles.address}>{event.address}</div>
         <img className={styles.map} src={event.coordinate} alt="location" />
       </div>
 
-      <div className={`${styles.marginSide} ${styles.borderBottom} ${styles.users}`}>
-        <LabeledIcon
-          icon={iconStyles.checkOutline}
-          iconWidth="1.5em"
-          iconHeight="1.5em"
-          gap="0.5em"
-          text={`${participants.going.length} going`}
-        />
-        <div className={styles.userList}>
-          {participants.going.map(({ picture }, i) => (
-            <ProfilePicture key={i} src={picture} size="2em" />
-          ))}
-        </div>
-
-        <div className={styles.borderBottom} />
-        <div className={styles.borderBottom} />
-
-        <LabeledIcon
-          icon={iconStyles.likeOutline}
-          iconWidth="1.5em"
-          iconHeight="1.5em"
-          gap="0.5em"
-          text={`${participants.likes.length} likes`}
-        />
-        <div className={styles.userList}>
-          {participants.likes.map(({ picture }, i) => (
-            <ProfilePicture key={i} src={picture} size="2em" />
-          ))}
-        </div>
-      </div>
-
-      <div className={`${styles.paddingSide} ${styles.borderBottom}`}>
-        <Comments comments={comments} />
-      </div>
+      <HorizontalSeparator />
+      <Participants participants={participants} />
+      <HorizontalSeparator />
+      <Comments comments={comments} />
 
       <JoinFooter />
     </TabContent>
