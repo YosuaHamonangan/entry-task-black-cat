@@ -14,3 +14,8 @@ export interface IReqGetComments {
 export interface IReqGetParticipants {
   eventId: string;
 }
+
+export interface IReqLogin {
+  email: string;
+  password: string;
+}

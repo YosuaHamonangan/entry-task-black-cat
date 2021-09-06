@@ -1,5 +1,6 @@
+import { errorKey } from '../enum/error';
 import { DateFilter } from '../enum/eventFilter';
-import { IEventData, ICommentData, IChannelData, IParticipantsData } from './res';
+import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } from './res';
 
 export interface IFilterState {
   date: DateFilter | null;
@@ -15,4 +16,12 @@ export interface IEventState {
   current: IEventData | null;
   comments: ICommentData[] | null;
   participants: IParticipantsData | null;
+}
+
+export interface IUserState {
+  current: IUserData | null;
+  error: {
+    key: errorKey;
+    message: string;
+  } | null;
 }
