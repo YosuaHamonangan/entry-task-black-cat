@@ -4,9 +4,11 @@ import { postLogin } from '../api/user';
 import { IUserState } from '../interfaces/state';
 import { IReqLogin } from '../interfaces/req';
 import { errorKey } from '../enum/error';
+import Cookies from 'js-cookie';
 
+const cookieUser = Cookies.get('user');
 const initialState: IUserState = {
-  current: null,
+  current: cookieUser ? JSON.parse(cookieUser) : null,
   error: null,
 };
 
@@ -25,6 +27,12 @@ export const userSlice = createSlice({
       state.error = user
         ? null
         : { key: errorKey.LOGIN_FORM, message: 'Invalid username or password' };
+
+      if (user) {
+        Cookies.set('user', JSON.stringify(user));
+      } else {
+        Cookies.remove('user');
+      }
     });
   },
 });
