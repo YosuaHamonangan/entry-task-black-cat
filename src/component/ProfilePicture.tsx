@@ -14,7 +14,7 @@ export default function ProfilePicture(props: IProps) {
       style={{
         width: props.size,
         height: props.size,
-        borderRadius: props.size,
+        borderRadius: '100%',
       }}
       alt="profile"
     />

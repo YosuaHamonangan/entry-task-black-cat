@@ -17,16 +17,18 @@
   height: 3em;
 }
 
-.header div {
+.header > div {
   height: 100%;
   padding: 0 1em;
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-  height: 100%;
+  width: 2em;
+  height: 2em;
 }
 
 .main {

@@ -4,11 +4,16 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import { selectShowSidemenu, toggleSidemenu } from '../reducer/app';
+import { selectCurrentUser } from '../reducer/user';
+import Icon from './Icon';
 import styles from './PageTemplate.module.css';
+import ProfilePicture from './ProfilePicture';
 
 export default function PageTemplate({ sidemenu, children }: any) {
-  const showSidemenu = useAppSelector(selectShowSidemenu);
   const dispatch = useAppDispatch();
+  const showSidemenu = useAppSelector(selectShowSidemenu);
+  const user = useAppSelector(selectCurrentUser);
+
   return (
     <div className={styles.container}>
       <div className={`${styles.sidemenu} ${showSidemenu ? '' : styles.hide}`}>{sidemenu}</div>
@@ -17,15 +22,23 @@ export default function PageTemplate({ sidemenu, children }: any) {
           <div>
             {sidemenu ? (
               <button onClick={() => dispatch(toggleSidemenu())}>
-                <div className={`${styles.logo} ${iconStyles.search} ${globalStyles.black}`} />
+                <Icon className={styles.logo} icon={iconStyles.search} color={globalStyles.black} />
               </button>
             ) : (
               <Link to="/">
-                <div className={`${styles.logo} ${iconStyles.home} ${globalStyles.black}`} />
+                <Icon className={styles.logo} icon={iconStyles.home} color={globalStyles.black} />
               </Link>
             )}
-            <div className={`${styles.logo} ${iconStyles.logoCat} ${globalStyles.complement}`} />
-            <div className={`${styles.logo} ${iconStyles.user} ${globalStyles.black}`} />
+            <Icon
+              className={styles.logo}
+              icon={iconStyles.logoCat}
+              color={globalStyles.complement}
+            />
+            {user?.picture ? (
+              <ProfilePicture className={styles.logo} src={user.picture} />
+            ) : (
+              <Icon className={styles.logo} icon={iconStyles.user} color={globalStyles.black} />
+            )}
           </div>
         </header>
         <main className={styles.main}>{children}</main>
