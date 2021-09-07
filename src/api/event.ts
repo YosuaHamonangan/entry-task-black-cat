@@ -1,10 +1,4 @@
-import {
-  IChannelData,
-  ICommentData,
-  IEventData,
-  IParticipantsData,
-  IUserData,
-} from '../interfaces/res';
+import { IChannelData, ICommentData, IEventData, IParticipantsData } from '../interfaces/res';
 import { IReqGetEvents, IReqGetComments, IReqGetParticipants } from '../interfaces/req';
 import {
   dummyEvents,
@@ -60,18 +54,11 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   }
 
   return data.map<IEventData>((ev) => {
-    // Check user cookie
-    let user: IUserData | null;
-    try {
-      user = JSON.parse(Cookies.get('user')!);
-    } catch (e) {
-      user = null;
-    }
+    const userId = Cookies.get('user_id') || null;
 
     const goingData = dummyGoingData.filter(({ event }) => event.id === ev.id);
     const likeData = dummyLikeData.filter(({ event }) => event.id === ev.id);
 
-    const userId = user?.id;
     return {
       ...JSON.parse(JSON.stringify(ev)),
       is_going: userId ? !!goingData.find(({ user }) => user.id === userId) : false,

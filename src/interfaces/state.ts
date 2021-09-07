@@ -19,6 +19,7 @@ export interface IEventState {
 }
 
 export interface IUserState {
+  isAuthenticated: boolean | null;
   current: IUserData | null;
   likes: IEventData[] | null;
   going: IEventData[] | null;

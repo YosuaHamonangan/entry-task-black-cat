@@ -51,3 +51,9 @@ export interface IParticipantsData {
   going: IUserData[];
   likes: IUserData[];
 }
+
+export interface ILoginData {
+  user: IUserData | null;
+  token: string | null;
+  error: string | null;
+}

@@ -18,6 +18,6 @@ export interface IReqGetParticipants {
 }
 
 export interface IReqLogin {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
