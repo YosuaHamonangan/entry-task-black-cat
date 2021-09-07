@@ -9,9 +9,9 @@ import {
 
 import faker from 'faker';
 
-faker.seed(123);
+faker.seed(1);
 export const dummyUsers: IUserData[] = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
   dummyUsers.push({
     id: faker.datatype.uuid(),
     username: faker.internet.userName(),
@@ -32,7 +32,7 @@ for (let i = 0; i < 3; i++) {
 export const dummyEvents: IEventData[] = [];
 const titles = ['Today Event', 'Tomorow Event', 'Next Week Event'];
 const deltaStart = [0, 1, 7];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
   let title = titles[i];
 
   let start = faker.date.future(0);

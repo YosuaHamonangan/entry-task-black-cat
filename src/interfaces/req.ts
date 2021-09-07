@@ -4,6 +4,8 @@ export interface IReqGetEvents {
     from?: string;
     to?: string;
     channels?: string[];
+    likes?: string;
+    going?: string;
   };
 }
 

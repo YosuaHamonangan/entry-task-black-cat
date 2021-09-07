@@ -21,7 +21,7 @@ export default function EventCard({ data }: Iprops) {
 
   function onClick() {
     dispatch(setCurrentEvent(data));
-    history.push(`event/${data.id}`);
+    history.push(`/event/${data.id}`);
   }
 
   return (

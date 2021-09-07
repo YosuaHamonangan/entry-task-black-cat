@@ -69,9 +69,11 @@ export default function User() {
               },
             ]}
           />
-          <LikesTab selected={selectedTab === TABS.LIKES} />
-          <GoingTab selected={selectedTab === TABS.GOING} />
-          <PastTab selected={selectedTab === TABS.PAST} />
+          <div className={styles.tabContent}>
+            <LikesTab selected={selectedTab === TABS.LIKES} />
+            <GoingTab selected={selectedTab === TABS.GOING} />
+            <PastTab selected={selectedTab === TABS.PAST} />
+          </div>
         </>
       )}
     </PageTemplate>

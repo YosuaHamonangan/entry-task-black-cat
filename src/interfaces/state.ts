@@ -20,8 +20,14 @@ export interface IEventState {
 
 export interface IUserState {
   current: IUserData | null;
+  likes: IEventData[] | null;
+  going: IEventData[] | null;
   error: {
     key: errorKey;
     message: string;
   } | null;
+}
+
+export interface IAppState {
+  showSidemenu: boolean;
 }

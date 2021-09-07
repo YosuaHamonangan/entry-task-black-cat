@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-
-export interface IAppState {
-  showSidemenu: boolean;
-}
+import { IAppState } from '../interfaces/state';
 
 const initialState: IAppState = {
   showSidemenu: false,
