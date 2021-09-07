@@ -13,7 +13,6 @@
 
 .join {
   background: #d5ef7f;
-  color: #788c36;
   height: 100%;
   width: 100%;
 }
@@ -34,6 +33,7 @@
   border: none;
   padding: 0 1em;
 }
+
 .commentInput input::placeholder {
   color: #d3c1e5;
 }

@@ -4,26 +4,45 @@ import iconStyles from '../enum/iconStyles';
 import Icon from './Icon';
 import LabeledIcon from './LabeledIcon';
 import styles from './Footer.module.css';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { selectCurrentEvent, setIsGoing, setIsLike } from '../reducer/event';
 
 export function JoinFooter() {
+  const dispatch = useAppDispatch();
+
+  const event = useAppSelector(selectCurrentEvent);
+
   return (
     <div className={styles.joinFooter}>
       <button onClick={() => console.log('comment')}>
         <Icon icon={iconStyles.noActivity} width="2em" height="2em" />
       </button>
-      <button onClick={() => console.log('like')}>
-        <Icon icon={iconStyles.likeOutline} width="2em" height="2em" />
-      </button>
-      <button className={styles.join} onClick={() => console.log('join')}>
-        <LabeledIcon
-          icon={iconStyles.checkOutline}
-          iconColor={globalStyles.complementDark2}
-          iconWidth="2em"
-          iconHeight="2em"
-          gap="0.5em"
-          text="Join"
-        />
-      </button>
+      {event && (
+        <button onClick={() => dispatch(setIsLike({ eventId: event.id, like: !event.is_like }))}>
+          <Icon
+            icon={event.is_like ? iconStyles.like : iconStyles.likeOutline}
+            color={event.is_like ? globalStyles.complement : globalStyles.black}
+            width="2em"
+            height="2em"
+          />
+        </button>
+      )}
+      {event && (
+        <button
+          className={styles.join}
+          onClick={() => dispatch(setIsGoing({ eventId: event.id, going: !event.is_going }))}
+        >
+          <LabeledIcon
+            icon={event.is_going ? iconStyles.check : iconStyles.checkOutline}
+            iconColor={event.is_going ? globalStyles.primary : globalStyles.complementDark2}
+            iconWidth="2em"
+            iconHeight="2em"
+            gap="0.5em"
+            textColor={event.is_going ? globalStyles.textPrimary : globalStyles.textComplementDark2}
+            text={event.is_going ? 'I am going' : 'Join'}
+          />
+        </button>
+      )}
     </div>
   );
 }

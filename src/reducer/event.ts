@@ -116,6 +116,10 @@ export const eventSlice = createSlice({
       if (!newEvent.is_going) {
         state.userGoing = state.userGoing?.filter((event) => event.id !== newEvent.id) || null;
       }
+
+      if (newEvent.id === state.current?.id) {
+        state.current = newEvent;
+      }
     });
 
     builder.addCase(setIsLike.fulfilled, (state, action) => {
@@ -128,6 +132,10 @@ export const eventSlice = createSlice({
 
       if (!newEvent.is_like) {
         state.userLikes = state.userLikes?.filter((event) => event.id !== newEvent.id) || null;
+      }
+
+      if (newEvent.id === state.current?.id) {
+        state.current = newEvent;
       }
     });
 
