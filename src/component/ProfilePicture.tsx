@@ -1,13 +1,16 @@
 import React from 'react';
+import globalStyles from '../enum/globalStyles';
+import iconStyles from '../enum/iconStyles';
+import Icon from './Icon';
 
 interface IProps {
   className?: string;
-  src: string | undefined;
+  src?: string | null;
   size?: number | string;
 }
 
 export default function ProfilePicture(props: IProps) {
-  return (
+  return props.src ? (
     <img
       className={`${props.className || ''}`}
       src={props.src}
@@ -17,6 +20,14 @@ export default function ProfilePicture(props: IProps) {
         borderRadius: '100%',
       }}
       alt="profile"
+    />
+  ) : (
+    <Icon
+      className={`${props.className || ''}`}
+      icon={iconStyles.user}
+      color={globalStyles.black}
+      width={props.size}
+      height={props.size}
     />
   );
 }

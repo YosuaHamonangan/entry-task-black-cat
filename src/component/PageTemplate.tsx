@@ -34,10 +34,10 @@ export default function PageTemplate({ sidemenu, children }: any) {
               icon={iconStyles.logoCat}
               color={globalStyles.complement}
             />
-            {user?.picture ? (
-              <ProfilePicture className={styles.logo} src={user.picture} />
-            ) : (
-              <Icon className={styles.logo} icon={iconStyles.user} color={globalStyles.black} />
+            {user && (
+              <Link to={`/user/${user.id}`}>
+                <ProfilePicture className={styles.logo} src={user.picture} />
+              </Link>
             )}
           </div>
         </header>

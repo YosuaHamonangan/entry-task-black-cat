@@ -6,8 +6,8 @@
 
 .email {
   display: inline-block;
-  -webkit-mask: url(../svg/user.svg) no-repeat center;
-  mask: url(../svg/user.svg) no-repeat center;
+  -webkit-mask: url(../svg/email.svg) no-repeat center;
+  mask: url(../svg/email.svg) no-repeat center;
 }
 
 .logo-cat {

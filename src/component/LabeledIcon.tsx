@@ -12,6 +12,7 @@ interface IProps {
   iconHeight?: number | string;
   text: string;
   textSize?: number | string;
+  textColor?: string;
   gap?: number | string;
 }
 
@@ -26,7 +27,10 @@ export default function LabeledIcon(props: IProps) {
           width={props.iconWidth}
           height={props.iconHeight}
         />
-        <span className="label" style={{ fontSize: props.textSize, marginLeft: props.gap }}>
+        <span
+          className={`label ${props.textColor || ''}`}
+          style={{ fontSize: props.textSize, marginLeft: props.gap }}
+        >
           {props.text}
         </span>
       </span>
