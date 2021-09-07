@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { postLogin, postTokenLogin } from '../api/user';
+import { postLogin, postLogout, postTokenLogin } from '../api/user';
 import { getEvents } from '../api/event';
 import { IUserState } from '../interfaces/state';
 import { IReqLogin } from '../interfaces/req';
@@ -32,6 +32,11 @@ export const login = createAsyncThunk('user/login', async (data: IReqLogin) => {
   };
 });
 
+export const logout = createAsyncThunk('user/logout', async () => {
+  const success = await postLogout();
+  return { success };
+});
+
 export const loadUserLikes = createAsyncThunk('user/loadUserLikes', async (userId: string) => {
   return await getEvents({
     filter: { likes: userId },
@@ -51,25 +56,30 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     function setUser(
       state: IUserState,
-      action: PayloadAction<{
-        user: IUserData | null;
-        token: string | null;
-        error: { key: errorKey; message: string } | null;
-      }>,
+      user: IUserData | null,
+      error: { key: errorKey; message: string } | null,
     ) {
-      const { user, token, error } = action.payload;
       state.current = user;
       state.isAuthenticated = !!user;
       state.likes = null;
       state.going = null;
       state.error = error;
-
-      if (user) Cookies.set('user_id', user.id);
-      if (token) Cookies.set('token', token);
     }
 
-    builder.addCase(login.fulfilled, setUser);
-    builder.addCase(tryRelogin.fulfilled, setUser);
+    builder.addCase(tryRelogin.fulfilled, (state, action) => {
+      setUser(state, action.payload.user, action.payload.error);
+    });
+
+    builder.addCase(login.fulfilled, (state, action) => {
+      setUser(state, action.payload.user, action.payload.error);
+    });
+
+    builder.addCase(logout.fulfilled, (state, action) => {
+      const { success } = action.payload;
+      if (success) {
+        setUser(state, null, null);
+      }
+    });
 
     builder.addCase(loadUserLikes.fulfilled, (state, action) => {
       const events = action.payload;

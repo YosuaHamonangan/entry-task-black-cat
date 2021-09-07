@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import LabeledIcon from '../../component/LabeledIcon';
 import PageTemplate from '../../component/PageTemplate';
 import ProfilePicture from '../../component/ProfilePicture';
 import Tabs from '../../component/Tabs';
 import globalStyles from '../../enum/globalStyles';
 import iconStyles from '../../enum/iconStyles';
-import { selectCurrentUser } from '../../reducer/user';
+import { logout, selectCurrentUser } from '../../reducer/user';
 import LikesTab from './tabs/LikesTab';
 import GoingTab from './tabs/GoingTab';
 import PastTab from './tabs/PastTab';
@@ -23,8 +23,14 @@ enum TABS {
 }
 
 export default function User() {
+  const dispatch = useAppDispatch();
+
   const [selectedTab, setSelectedTab] = useState<TABS>(TABS.LIKES);
   const user = useAppSelector(selectCurrentUser);
+
+  function onLogout() {
+    dispatch(logout());
+  }
 
   return (
     <PageTemplate>
@@ -44,6 +50,9 @@ export default function User() {
               textColor={globalStyles.textPrimary}
               gap="0.5em"
             />
+            <button className={styles.logout} onClick={onLogout}>
+              Logout
+            </button>
           </div>
           <Tabs
             onSelect={(tab) => setSelectedTab(tab)}

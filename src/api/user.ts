@@ -12,6 +12,9 @@ export async function postLogin(req: IReqLogin): Promise<ILoginData> {
       token: null,
     };
   }
+
+  Cookies.set('user_id', user.id);
+  Cookies.set('token', 'token');
   return {
     user,
     token: 'token',
@@ -31,9 +34,19 @@ export async function postTokenLogin(): Promise<ILoginData> {
     };
   }
   const user = dummyUsers.find((user) => user.id === userId) || null;
+  if (user) {
+    Cookies.set('user_id', user.id);
+    Cookies.set('token', 'token');
+  }
   return {
     user,
     token: user ? 'token' : null,
     error: null,
   };
+}
+
+export async function postLogout(): Promise<boolean> {
+  Cookies.remove('user_id');
+  Cookies.remove('token');
+  return true;
 }
