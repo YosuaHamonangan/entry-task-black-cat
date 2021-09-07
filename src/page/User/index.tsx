@@ -51,17 +51,20 @@ export default function User() {
             tabsInfo={[
               {
                 key: TABS.LIKES,
-                icon: iconStyles.user,
+                icon: iconStyles.likeOutline,
+                iconSelected: iconStyles.like,
                 text: 'Likes',
               },
               {
                 key: TABS.GOING,
-                icon: iconStyles.people,
+                icon: iconStyles.checkOutline,
+                iconSelected: iconStyles.check,
                 text: 'Going',
               },
               {
                 key: TABS.PAST,
-                icon: iconStyles.commentOutline,
+                icon: iconStyles.pastOutline,
+                iconSelected: iconStyles.past,
                 text: 'Past',
               },
             ]}

@@ -1,5 +1,4 @@
 import React from 'react';
-import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import LabeledIcon from './LabeledIcon';
 import './Tabs.css';
@@ -11,22 +10,23 @@ export default function Tabs<KEYS>(props: {
   tabsInfo: {
     key: KEYS;
     icon: iconStyles;
+    iconSelected: iconStyles;
     text: string;
   }[];
 }) {
   const { onSelect, selected, tabsInfo } = props;
 
   const content: any = [];
-  tabsInfo.forEach(({ key, icon, text }, i) => {
+  tabsInfo.forEach(({ key, iconSelected, icon, text }, i) => {
+    const isSelected = selected === key;
     content.push(
       <button
         key={i}
-        className={`tab-item ${selected === key ? 'selected' : ''}`}
+        className={`tab-item ${isSelected ? 'selected' : ''}`}
         onClick={() => onSelect(key)}
       >
         <LabeledIcon
-          icon={icon}
-          iconColor={selected === key ? globalStyles.complementDark1 : globalStyles.black}
+          icon={isSelected ? iconSelected : icon}
           iconWidth="1.5em"
           iconHeight="1.5em"
           gap="0.5em"

@@ -15,10 +15,16 @@ enum iconStyles {
   dateFrom = 'date-from',
   dateTo = 'date-to',
   people = 'people',
+  peopleOutline = 'people-outline',
   reply = 'reply',
   commentOutline = 'comment-outline',
+  comment = 'comment',
   send = 'send',
   cross = 'cross',
+  pastOutline = 'past-outline',
+  past = 'past',
+  infoOutline = 'info-outline',
+  info = 'info',
 }
 
 export default iconStyles;

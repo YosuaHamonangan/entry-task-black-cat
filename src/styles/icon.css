@@ -88,10 +88,22 @@
   mask: url(../svg/people.svg) no-repeat center;
 }
 
+.people-outline {
+  display: inline-block;
+  -webkit-mask: url(../svg/people-outline.svg) no-repeat center;
+  mask: url(../svg/people-outline.svg) no-repeat center;
+}
+
 .reply {
   display: inline-block;
   -webkit-mask: url(../svg/reply.svg) no-repeat center;
   mask: url(../svg/reply.svg) no-repeat center;
+}
+
+.comment {
+  display: inline-block;
+  -webkit-mask: url(../svg/comment.svg) no-repeat center;
+  mask: url(../svg/comment.svg) no-repeat center;
 }
 
 .comment-outline {
@@ -110,4 +122,28 @@
   display: inline-block;
   -webkit-mask: url(../svg/cross.svg) no-repeat center;
   mask: url(../svg/cross.svg) no-repeat center;
+}
+
+.past {
+  display: inline-block;
+  -webkit-mask: url(../svg/past.svg) no-repeat center;
+  mask: url(../svg/past.svg) no-repeat center;
+}
+
+.past-outline {
+  display: inline-block;
+  -webkit-mask: url(../svg/past-outline.svg) no-repeat center;
+  mask: url(../svg/past-outline.svg) no-repeat center;
+}
+
+.info {
+  display: inline-block;
+  -webkit-mask: url(../svg/info.svg) no-repeat center;
+  mask: url(../svg/info.svg) no-repeat center;
+}
+
+.info-outline {
+  display: inline-block;
+  -webkit-mask: url(../svg/info-outline.svg) no-repeat center;
+  mask: url(../svg/info-outline.svg) no-repeat center;
 }

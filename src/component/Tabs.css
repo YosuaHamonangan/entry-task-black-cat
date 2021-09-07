@@ -10,10 +10,19 @@
 
 .tab-item {
   font-size: 0.9em;
+  color: #8c8c8c;
 }
 
 .tab-item.selected {
   color: #aecb4f;
+}
+
+.tab-item .icon {
+  background: #8c8c8c;
+}
+
+.tab-item.selected .icon {
+  background: #aecb4f;
 }
 
 .tab-separator {

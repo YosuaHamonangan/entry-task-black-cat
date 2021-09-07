@@ -81,17 +81,20 @@ export default function Event() {
               tabsInfo={[
                 {
                   key: TABS.DETAIL,
-                  icon: iconStyles.user,
+                  icon: iconStyles.infoOutline,
+                  iconSelected: iconStyles.info,
                   text: 'Details',
                 },
                 {
                   key: TABS.PARTICIPANTS,
-                  icon: iconStyles.people,
+                  icon: iconStyles.peopleOutline,
+                  iconSelected: iconStyles.people,
                   text: 'Participants',
                 },
                 {
                   key: TABS.COMMENTS,
                   icon: iconStyles.commentOutline,
+                  iconSelected: iconStyles.comment,
                   text: 'Comments',
                 },
               ]}
