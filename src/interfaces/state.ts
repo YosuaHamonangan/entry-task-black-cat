@@ -16,13 +16,13 @@ export interface IEventState {
   current: IEventData | null;
   comments: ICommentData[] | null;
   participants: IParticipantsData | null;
+  userLikes: IEventData[] | null;
+  userGoing: IEventData[] | null;
 }
 
 export interface IUserState {
   isAuthenticated: boolean | null;
   current: IUserData | null;
-  likes: IEventData[] | null;
-  going: IEventData[] | null;
   error: {
     key: errorKey;
     message: string;

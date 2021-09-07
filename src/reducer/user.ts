@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { postLogin, postLogout, postTokenLogin } from '../api/user';
-import { getEvents } from '../api/event';
 import { IUserState } from '../interfaces/state';
 import { IReqLogin } from '../interfaces/req';
 import { errorKey } from '../enum/error';
@@ -11,8 +10,6 @@ import { IUserData } from '../interfaces/res';
 const initialState: IUserState = {
   isAuthenticated: null,
   current: null,
-  likes: null,
-  going: null,
   error: null,
 };
 
@@ -37,18 +34,6 @@ export const logout = createAsyncThunk('user/logout', async () => {
   return { success };
 });
 
-export const loadUserLikes = createAsyncThunk('user/loadUserLikes', async (userId: string) => {
-  return await getEvents({
-    filter: { likes: userId },
-  });
-});
-
-export const loadUserGoing = createAsyncThunk('user/loadUserGoing', async (userId: string) => {
-  return await getEvents({
-    filter: { going: userId },
-  });
-});
-
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -61,8 +46,6 @@ export const userSlice = createSlice({
     ) {
       state.current = user;
       state.isAuthenticated = !!user;
-      state.likes = null;
-      state.going = null;
       state.error = error;
     }
 
@@ -80,23 +63,11 @@ export const userSlice = createSlice({
         setUser(state, null, null);
       }
     });
-
-    builder.addCase(loadUserLikes.fulfilled, (state, action) => {
-      const events = action.payload;
-      state.likes = events;
-    });
-
-    builder.addCase(loadUserGoing.fulfilled, (state, action) => {
-      const events = action.payload;
-      state.going = events;
-    });
   },
 });
 
 export const selectIsAuthenticated = (state: RootState) => state.user.isAuthenticated;
 export const selectCurrentUser = (state: RootState) => state.user.current;
 export const selectLoginError = (state: RootState) => state.user.error;
-export const selectUserLikes = (state: RootState) => state.user.likes;
-export const selectUserGoing = (state: RootState) => state.user.going;
 
 export default userSlice.reducer;

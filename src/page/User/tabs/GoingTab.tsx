@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import EventCard from '../../../component/EventCard';
 import TabContent from '../../../component/TabContent';
-import { selectCurrentUser, loadUserGoing, selectUserGoing } from '../../../reducer/user';
+import { selectCurrentUser } from '../../../reducer/user';
+import { loadUserGoing, selectUserGoing } from '../../../reducer/event';
 
 interface IProps {
   selected: boolean;

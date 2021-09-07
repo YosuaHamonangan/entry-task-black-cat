@@ -5,7 +5,7 @@ import iconStyles from '../enum/iconStyles';
 import { IEventData } from '../interfaces/res';
 import styles from './EventCard.module.css';
 import { useAppDispatch } from '../app/hooks';
-import { setIsGoing, setIsLiked, setCurrentEvent } from '../reducer/event';
+import { setIsGoing, setIsLike, setCurrentEvent } from '../reducer/event';
 import { getDateTimeString } from '../util/date';
 
 interface Iprops {
@@ -47,7 +47,7 @@ export default function EventCard({ data }: Iprops) {
           <button
             className={styles.button}
             onClick={() => {
-              dispatch(setIsGoing({ id: data.id, val: false }));
+              dispatch(setIsGoing({ eventId: data.id, going: false }));
             }}
           >
             <div className={`${styles.icon} ${iconStyles.check} ${globalStyles.complementDark1}`} />
@@ -57,18 +57,18 @@ export default function EventCard({ data }: Iprops) {
           <button
             className={styles.button}
             onClick={() => {
-              dispatch(setIsGoing({ id: data.id, val: true }));
+              dispatch(setIsGoing({ eventId: data.id, going: true }));
             }}
           >
             <div className={`${styles.icon} ${iconStyles.checkOutline} ${globalStyles.primary}`} />
             <span className={globalStyles.textPrimary}>{data.going || 0} Going</span>
           </button>
         )}
-        {data.is_liked ? (
+        {data.is_like ? (
           <button
             className={styles.button}
             onClick={() => {
-              dispatch(setIsLiked({ id: data.id, val: false }));
+              dispatch(setIsLike({ eventId: data.id, like: false }));
             }}
           >
             <div className={`${styles.icon} ${iconStyles.like} ${globalStyles.redLight}`} />
@@ -78,7 +78,7 @@ export default function EventCard({ data }: Iprops) {
           <button
             className={styles.button}
             onClick={() => {
-              dispatch(setIsLiked({ id: data.id, val: true }));
+              dispatch(setIsLike({ eventId: data.id, like: true }));
             }}
           >
             <div className={`${styles.icon} ${iconStyles.likeOutline} ${globalStyles.primary}`} />

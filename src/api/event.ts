@@ -1,11 +1,27 @@
-import { IChannelData, ICommentData, IEventData, IParticipantsData } from '../interfaces/res';
-import { IReqGetEvents, IReqGetComments, IReqGetParticipants } from '../interfaces/req';
+import {
+  IChannelData,
+  ICommentData,
+  IEventData,
+  IGoingData,
+  ILikeData,
+  IParticipantsData,
+  IResPostIsGoing,
+  IResPostIsLike,
+} from '../interfaces/res';
+import {
+  IReqGetEvents,
+  IReqGetComments,
+  IReqGetParticipants,
+  IReqPostIsGoing,
+  IReqPostIsLike,
+} from '../interfaces/req';
 import {
   dummyEvents,
   dummyCommentData,
   dummyChannels,
   dummyGoingData,
   dummyLikeData,
+  dummyUsers,
 } from './dummyDb';
 import Cookies from 'js-cookie';
 
@@ -63,7 +79,7 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
       ...JSON.parse(JSON.stringify(ev)),
       is_going: userId ? !!goingData.find(({ user }) => user.id === userId) : false,
       going: goingData.length,
-      is_liked: userId ? !!likeData.find(({ user }) => user.id === userId) : false,
+      is_like: userId ? !!likeData.find(({ user }) => user.id === userId) : false,
       likes: likeData.length,
     };
   });
@@ -88,5 +104,55 @@ export async function getParticipants(req: IReqGetParticipants): Promise<IPartic
     likes: dummyLikeData
       .filter(({ event }) => event.id === req.eventId)
       .map(({ user }) => JSON.parse(JSON.stringify(user))),
+  };
+}
+
+export async function postIsGoing(req: IReqPostIsGoing): Promise<IResPostIsGoing> {
+  const userId = Cookies.get('user_id');
+  const { eventId, going } = req;
+
+  const idx = dummyGoingData.findIndex(
+    ({ user, event }) => user.id === userId && event.id === eventId,
+  );
+
+  if (going && idx === -1) {
+    const goingData: IGoingData = {
+      user: dummyUsers.find((user) => user.id === userId)!,
+      event: dummyEvents.find((event) => event.id === eventId)!,
+    };
+    dummyGoingData.push(goingData);
+  }
+
+  if (!going && idx !== -1) {
+    dummyGoingData.splice(idx, 1);
+  }
+
+  return {
+    event: (await getEvents({ id: eventId }))[0],
+  };
+}
+
+export async function postIsLike(req: IReqPostIsLike): Promise<IResPostIsLike> {
+  const userId = Cookies.get('user_id');
+  const { eventId, like } = req;
+
+  const idx = dummyLikeData.findIndex(
+    ({ user, event }) => user.id === userId && event.id === eventId,
+  );
+
+  if (like && idx === -1) {
+    const likeData: ILikeData = {
+      user: dummyUsers.find((user) => user.id === userId)!,
+      event: dummyEvents.find((event) => event.id === eventId)!,
+    };
+    dummyLikeData.push(likeData);
+  }
+
+  if (!like && idx !== -1) {
+    dummyLikeData.splice(idx, 1);
+  }
+
+  return {
+    event: (await getEvents({ id: eventId }))[0],
   };
 }

@@ -26,7 +26,7 @@ export interface IEventData {
   going?: number;
   is_going?: boolean;
   likes?: number;
-  is_liked?: boolean;
+  is_like?: boolean;
 }
 
 export interface ICommentData {
@@ -52,8 +52,16 @@ export interface IParticipantsData {
   likes: IUserData[];
 }
 
-export interface ILoginData {
+export interface IResPostLogin {
   user: IUserData | null;
   token: string | null;
   error: string | null;
+}
+
+export interface IResPostIsGoing {
+  event: IEventData;
+}
+
+export interface IResPostIsLike {
+  event: IEventData;
 }

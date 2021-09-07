@@ -1,6 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { getEvents, getChannels, getComments, getParticipants } from '../api/event';
+import {
+  getEvents,
+  getChannels,
+  getComments,
+  getParticipants,
+  postIsGoing,
+  postIsLike,
+} from '../api/event';
 import { IReqGetEvents } from '../interfaces/req';
 import { IEventState, IFilterState } from '../interfaces/state';
 import { getFilterDateRange } from '../util/eventFilter';
@@ -12,6 +19,8 @@ const initialState: IEventState = {
   current: null,
   comments: null,
   participants: null,
+  userGoing: null,
+  userLikes: null,
 };
 
 export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
@@ -42,6 +51,21 @@ export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IF
   return await getEvents(req);
 });
 export const loadChannels = createAsyncThunk('event/getChannels', getChannels);
+export const setIsGoing = createAsyncThunk('event/setIsGoing', postIsGoing);
+export const setIsLike = createAsyncThunk('event/setIsLike', postIsLike);
+export const setIs = createAsyncThunk('event/setIsGoing', postIsGoing);
+
+export const loadUserLikes = createAsyncThunk('user/loadUserLikes', async (userId: string) => {
+  return await getEvents({
+    filter: { likes: userId },
+  });
+});
+
+export const loadUserGoing = createAsyncThunk('user/loadUserGoing', async (userId: string) => {
+  return await getEvents({
+    filter: { going: userId },
+  });
+});
 
 export const eventSlice = createSlice({
   name: 'event',
@@ -55,15 +79,6 @@ export const eventSlice = createSlice({
       if (idx === -1) return;
 
       state.list[idx] = Object.assign({}, state.list[idx], { isLiked: val });
-    },
-    setIsGoing: (state, action: PayloadAction<{ id: string; val: boolean }>) => {
-      if (!state.list) return;
-
-      const { id, val } = action.payload;
-      const idx = state.list.findIndex((event) => event.id === id);
-      if (idx === -1) return;
-
-      state.list[idx] = Object.assign({}, state.list[idx], { isGoing: val });
     },
     setCurrentEvent: (state, action: PayloadAction<IEventData>) => {
       state.current = action.payload;
@@ -89,15 +104,53 @@ export const eventSlice = createSlice({
     builder.addCase(loadParticipants.fulfilled, (state, action) => {
       state.participants = action.payload;
     });
+
+    builder.addCase(setIsGoing.fulfilled, (state, action) => {
+      const { event: newEvent } = action.payload;
+      state.list =
+        state.list?.map((event) => {
+          if (event.id === newEvent.id) return newEvent;
+          else return event;
+        }) || null;
+
+      if (!newEvent.is_going) {
+        state.userGoing = state.userGoing?.filter((event) => event.id !== newEvent.id) || null;
+      }
+    });
+
+    builder.addCase(setIsLike.fulfilled, (state, action) => {
+      const { event: newEvent } = action.payload;
+      state.list =
+        state.list?.map((event) => {
+          if (event.id === newEvent.id) return newEvent;
+          else return event;
+        }) || null;
+
+      if (!newEvent.is_like) {
+        state.userLikes = state.userLikes?.filter((event) => event.id !== newEvent.id) || null;
+      }
+    });
+
+    builder.addCase(loadUserLikes.fulfilled, (state, action) => {
+      const events = action.payload;
+      state.userLikes = events;
+    });
+
+    builder.addCase(loadUserGoing.fulfilled, (state, action) => {
+      const events = action.payload;
+      state.userGoing = events;
+    });
   },
 });
 
-export const { setIsLiked, setIsGoing, setCurrentEvent } = eventSlice.actions;
+export const { setCurrentEvent } = eventSlice.actions;
 
 export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;
 export const selectEvents = (state: RootState) => state.event.list;
 export const selectChannels = (state: RootState) => state.event.channels;
 export const selectParticipants = (state: RootState) => state.event.participants;
+export const selectUserLikes = (state: RootState) => state.event.userLikes;
+export const selectUserGoing = (state: RootState) => state.event.userGoing;
 
 export default eventSlice.reducer;
