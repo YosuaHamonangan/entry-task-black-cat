@@ -28,6 +28,8 @@ import {
 } from './dummyDb';
 import Cookies from 'js-cookie';
 
+const MAX_GET_COUNT = 10;
+
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   let data = dummyEvents;
   const { filter } = req;
@@ -89,13 +91,22 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 }
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
-  const { eventId, userId } = req;
-  const data = dummyCommentData.filter(({ event, user }) => {
+  const { eventId, userId, startIdx = 0 } = req;
+  const data: ICommentData[] = [];
+  let i = 0;
+  while (i < dummyCommentData.length && data.length < startIdx + MAX_GET_COUNT) {
+    const comment = dummyCommentData[i];
+    const { event, user } = comment;
+
     let shown = true;
     if (eventId) shown = shown && event.id === eventId;
     if (userId) shown = shown && user.id === userId;
-    return shown;
-  });
+
+    if (shown) data.push(comment);
+
+    i++;
+  }
+  data.splice(0, startIdx);
   data.sort((c1, c2) => {
     if (c1.time > c2.time) return -1;
     if (c1.time < c2.time) return 1;

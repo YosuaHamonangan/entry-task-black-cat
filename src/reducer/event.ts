@@ -22,7 +22,7 @@ const initialState: IEventState = {
   participants: null,
   userGoing: null,
   userLikes: null,
-  pastComments: null,
+  pastComments: [],
 };
 
 export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
@@ -35,8 +35,8 @@ export const loadComments = createAsyncThunk('event/getComment', async (eventId:
 
 export const loadPastComments = createAsyncThunk(
   'event/loadPastComments',
-  async (userId: string) => {
-    return await getComments({ userId });
+  async (req: { userId: string; startIdx: number }) => {
+    return await getComments(req);
   },
 );
 
@@ -94,17 +94,11 @@ export const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers: {
-    setIsLiked: (state, action: PayloadAction<{ id: string; val: boolean }>) => {
-      if (!state.list) return;
-
-      const { id, val } = action.payload;
-      const idx = state.list.findIndex((event) => event.id === id);
-      if (idx === -1) return;
-
-      state.list[idx] = Object.assign({}, state.list[idx], { isLiked: val });
-    },
     setCurrentEvent: (state, action: PayloadAction<IEventData>) => {
       state.current = action.payload;
+    },
+    resetPastComments: (state) => {
+      state.pastComments = [];
     },
   },
   extraReducers: (builder) => {
@@ -125,7 +119,7 @@ export const eventSlice = createSlice({
     });
 
     builder.addCase(loadPastComments.fulfilled, (state, action) => {
-      state.pastComments = action.payload;
+      state.pastComments = state.pastComments.concat(action.payload);
     });
 
     builder.addCase(loadParticipants.fulfilled, (state, action) => {
@@ -183,7 +177,7 @@ export const eventSlice = createSlice({
   },
 });
 
-export const { setCurrentEvent } = eventSlice.actions;
+export const { setCurrentEvent, resetPastComments } = eventSlice.actions;
 
 export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;

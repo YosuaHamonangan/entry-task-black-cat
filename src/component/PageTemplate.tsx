@@ -44,7 +44,9 @@ export default function PageTemplate({ sidemenu, children }: any) {
             )}
           </div>
         </header>
-        <main className={styles.main}>{children}</main>
+        <main id="main" className={styles.main}>
+          {children}
+        </main>
       </div>
     </div>
   );

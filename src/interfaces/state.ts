@@ -19,7 +19,7 @@ export interface IEventState {
   participants: IParticipantsData | null;
   userLikes: IEventData[] | null;
   userGoing: IEventData[] | null;
-  pastComments: ICommentData[] | null;
+  pastComments: ICommentData[];
 }
 
 export interface IUserState {
