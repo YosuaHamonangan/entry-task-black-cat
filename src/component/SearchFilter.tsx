@@ -148,7 +148,7 @@ export default function SearchFilter() {
             All
           </button>
           {channels?.map((channel, i) => {
-            const selected = selectedChannels === 'all' || !!selectedChannels?.includes(channel);
+            const selected = selectedChannels !== 'all' && selectedChannels?.includes(channel);
             return (
               <button
                 key={i}
