@@ -18,6 +18,7 @@ enum iconStyles {
   peopleOutline = 'people-outline',
   reply = 'reply',
   commentOutline = 'comment-outline',
+  commentSingle = 'comment-single',
   comment = 'comment',
   send = 'send',
   cross = 'cross',

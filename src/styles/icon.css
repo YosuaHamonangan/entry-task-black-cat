@@ -112,6 +112,12 @@
   mask: url(../svg/comment-outline.svg) no-repeat center;
 }
 
+.comment-single {
+  display: inline-block;
+  -webkit-mask: url(../svg/comment-single.svg) no-repeat center;
+  mask: url(../svg/comment-single.svg) no-repeat center;
+}
+
 .send {
   display: inline-block;
   -webkit-mask: url(../svg/send.svg) no-repeat center;

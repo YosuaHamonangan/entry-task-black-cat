@@ -1,5 +1,6 @@
 import { errorKey } from '../enum/error';
 import { DateFilter } from '../enum/eventFilter';
+import { EVENT_TABS } from '../enum/tabs';
 import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } from './res';
 
 export interface IFilterState {
@@ -31,4 +32,5 @@ export interface IUserState {
 
 export interface IAppState {
   showSidemenu: boolean;
+  selectedEventTab: EVENT_TABS;
 }

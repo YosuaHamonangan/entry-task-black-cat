@@ -6,6 +6,8 @@ import LabeledIcon from './LabeledIcon';
 import styles from './Footer.module.css';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectCurrentEvent, setIsGoing, setIsLike } from '../reducer/event';
+import { setSelectedEventTab } from '../reducer/app';
+import { EVENT_TABS } from '../enum/tabs';
 
 export function JoinFooter() {
   const dispatch = useAppDispatch();
@@ -14,8 +16,8 @@ export function JoinFooter() {
 
   return (
     <div className={styles.joinFooter}>
-      <button onClick={() => console.log('comment')}>
-        <Icon icon={iconStyles.noActivity} width="2em" height="2em" />
+      <button onClick={() => dispatch(setSelectedEventTab(EVENT_TABS.COMMENTS))}>
+        <Icon icon={iconStyles.commentSingle} width="2em" height="2em" />
       </button>
       {event && (
         <button onClick={() => dispatch(setIsLike({ eventId: event.id, like: !event.is_like }))}>

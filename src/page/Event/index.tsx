@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
@@ -18,20 +18,20 @@ import styles from './Event.module.css';
 import ParticipantsTab from './tabs/ParticipantsTab';
 import CommentsTab from './tabs/CommentsTab';
 import Tabs from '../../component/Tabs';
-
-// eslint-disable-next-line no-unused-vars
-enum TABS {
-  // eslint-disable-next-line no-unused-vars
-  DETAIL,
-  // eslint-disable-next-line no-unused-vars
-  PARTICIPANTS,
-  // eslint-disable-next-line no-unused-vars
-  COMMENTS,
-}
+import { EVENT_TABS } from '../../enum/tabs';
+import { selectSelectedEventTab, setSelectedEventTab } from '../../reducer/app';
 
 export default function Event() {
   const dispatch = useAppDispatch();
-  const [selectedTab, setSelectedTab] = useState<TABS>(TABS.DETAIL);
+
+  const selectedTab = useAppSelector(selectSelectedEventTab);
+  function setSelectedTab(tab: EVENT_TABS) {
+    dispatch(setSelectedEventTab(tab));
+  }
+
+  // Make sure the first tab opened is detail tab
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setSelectedTab(EVENT_TABS.DETAIL), []);
 
   const { id } = useParams<{ id: string }>();
   let event = useAppSelector(selectCurrentEvent);
@@ -80,19 +80,19 @@ export default function Event() {
               selected={selectedTab}
               tabsInfo={[
                 {
-                  key: TABS.DETAIL,
+                  key: EVENT_TABS.DETAIL,
                   icon: iconStyles.infoOutline,
                   iconSelected: iconStyles.info,
                   text: 'Details',
                 },
                 {
-                  key: TABS.PARTICIPANTS,
+                  key: EVENT_TABS.PARTICIPANTS,
                   icon: iconStyles.peopleOutline,
                   iconSelected: iconStyles.people,
                   text: 'Participants',
                 },
                 {
-                  key: TABS.COMMENTS,
+                  key: EVENT_TABS.COMMENTS,
                   icon: iconStyles.commentOutline,
                   iconSelected: iconStyles.comment,
                   text: 'Comments',
@@ -100,17 +100,17 @@ export default function Event() {
               ]}
             />
             <DetailTab
-              selected={selectedTab === TABS.DETAIL}
+              selected={selectedTab === EVENT_TABS.DETAIL}
               event={event}
               comments={comments}
               participants={participants}
             />
             <ParticipantsTab
-              selected={selectedTab === TABS.PARTICIPANTS}
+              selected={selectedTab === EVENT_TABS.PARTICIPANTS}
               comments={comments}
               participants={participants}
             />
-            <CommentsTab selected={selectedTab === TABS.COMMENTS} comments={comments} />
+            <CommentsTab selected={selectedTab === EVENT_TABS.COMMENTS} comments={comments} />
           </>
         )}
       </div>
