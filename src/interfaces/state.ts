@@ -20,6 +20,7 @@ export interface IEventState {
   userLikes: IEventData[] | null;
   userGoing: IEventData[] | null;
   pastComments: ICommentData[];
+  isLoadingPastComments: boolean;
 }
 
 export interface IUserState {

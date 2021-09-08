@@ -3,27 +3,25 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function InfiniteScrolling<ResponseInterface>(props: {
   // eslint-disable-next-line no-unused-vars
-  next: (nextIdx: number) => Promise<ResponseInterface[]>;
+  next: () => Promise<ResponseInterface[]>;
   numDataLoad?: number;
   children: any;
 }) {
   const { next, children } = props;
   const [data, setData] = useState<ResponseInterface[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [nextIdx, setNextIdx] = useState(0);
 
   async function getNextData() {
     try {
-      const newData = await next(nextIdx);
+      const newData = await next();
       if (newData.length) {
         const nextData = data.concat(newData);
         setData(nextData);
-        setNextIdx(nextData.length);
       } else {
         setHasMore(false);
       }
     } catch (err) {
-      console.log(err);
+      console.warn(err);
     }
   }
 

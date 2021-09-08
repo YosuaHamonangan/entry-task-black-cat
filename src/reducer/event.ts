@@ -23,6 +23,7 @@ const initialState: IEventState = {
   userGoing: null,
   userLikes: null,
   pastComments: [],
+  isLoadingPastComments: false,
 };
 
 export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
@@ -118,8 +119,17 @@ export const eventSlice = createSlice({
       state.comments = action.payload;
     });
 
+    builder.addCase(loadPastComments.pending, (state) => {
+      state.isLoadingPastComments = true;
+    });
+
+    builder.addCase(loadPastComments.rejected, (state) => {
+      state.isLoadingPastComments = false;
+    });
+
     builder.addCase(loadPastComments.fulfilled, (state, action) => {
       state.pastComments = state.pastComments.concat(action.payload);
+      state.isLoadingPastComments = false;
     });
 
     builder.addCase(loadParticipants.fulfilled, (state, action) => {
@@ -182,6 +192,7 @@ export const { setCurrentEvent, resetPastComments } = eventSlice.actions;
 export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;
 export const selectPastComments = (state: RootState) => state.event.pastComments;
+export const selectIsLoadingPastComments = (state: RootState) => state.event.isLoadingPastComments;
 export const selectEvents = (state: RootState) => state.event.list;
 export const selectChannels = (state: RootState) => state.event.channels;
 export const selectParticipants = (state: RootState) => state.event.participants;
