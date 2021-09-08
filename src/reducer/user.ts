@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { postLogin, postLogout, postTokenLogin } from '../api/user';
 import { IUserState } from '../interfaces/state';
-import { IReqLogin } from '../interfaces/req';
+import { IReqPostLogin } from '../interfaces/req';
 import { errorKey } from '../enum/error';
 import Cookies from 'js-cookie';
 import { IUserData } from '../interfaces/data';
@@ -20,7 +20,7 @@ export const tryRelogin = createAsyncThunk('user/tryRelogin', async () => {
   return { user, token, error: null };
 });
 
-export const login = createAsyncThunk('user/login', async (data: IReqLogin) => {
+export const login = createAsyncThunk('user/login', async (data: IReqPostLogin) => {
   const { user, token, error } = await postLogin(data);
   return {
     user,

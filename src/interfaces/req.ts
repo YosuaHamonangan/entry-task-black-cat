@@ -27,7 +27,9 @@ export interface IReqPostIsLike {
   like: boolean;
 }
 
-export interface IReqLogin {
+export interface IReqPostLogin {
   email?: string;
   password?: string;
 }
+
+export interface IReqPostComment {}

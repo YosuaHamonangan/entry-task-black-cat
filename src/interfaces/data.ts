@@ -34,6 +34,8 @@ export interface ICommentData {
   user: IUserData;
   comment: string;
   time: string;
+  targetId: string | null;
+  target?: IUserData | null;
 }
 
 export interface ILikeData {
