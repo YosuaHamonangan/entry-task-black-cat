@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
-import { selectShowSidemenu, toggleSidemenu } from '../reducer/app';
+import { selectShowSidemenu, toggleSidemenu, hideSidemenu } from '../reducer/app';
 import { selectCurrentUser } from '../reducer/user';
 import Icon from './Icon';
 import styles from './PageTemplate.module.css';
@@ -18,6 +18,9 @@ export default function PageTemplate({ sidemenu, children }: any) {
     <div className={styles.container}>
       <div className={`${styles.sidemenu} ${showSidemenu ? '' : styles.hide}`}>{sidemenu}</div>
       <div>
+        {showSidemenu && (
+          <button className={styles.btnOverlay} onClick={() => dispatch(hideSidemenu())} />
+        )}
         <header className={`${styles.header} ${globalStyles.primary}`}>
           <div>
             {sidemenu ? (

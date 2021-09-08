@@ -36,3 +36,10 @@
   height: calc(100vh - 3em);
   overflow: hidden auto;
 }
+
+.btnOverlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+}
