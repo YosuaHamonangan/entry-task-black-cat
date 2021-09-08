@@ -1,7 +1,7 @@
 import { errorKey } from '../enum/error';
 import { DateFilter } from '../enum/eventFilter';
 import { EVENT_TABS } from '../enum/tabs';
-import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } from './res';
+import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } from './data';
 
 export interface IFilterState {
   date: DateFilter | null;

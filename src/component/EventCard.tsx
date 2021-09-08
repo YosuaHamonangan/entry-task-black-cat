@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
-import { IEventData } from '../interfaces/res';
+import { IEventData } from '../interfaces/data';
 import styles from './EventCard.module.css';
 import { useAppDispatch } from '../app/hooks';
 import { setIsGoing, setIsLike, setCurrentEvent } from '../reducer/event';

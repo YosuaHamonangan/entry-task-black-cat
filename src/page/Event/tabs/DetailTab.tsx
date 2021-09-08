@@ -7,7 +7,7 @@ import { HorizontalSeparator, VerticalSeparator } from '../../../component/Separ
 import TabContent from '../../../component/TabContent';
 import globalStyles from '../../../enum/globalStyles';
 import iconStyles from '../../../enum/iconStyles';
-import { IEventData, ICommentData, IParticipantsData } from '../../../interfaces/res';
+import { IEventData, ICommentData, IParticipantsData } from '../../../interfaces/data';
 import { getFullDateString, getTimeString } from '../../../util/date';
 import styles from './DetailTab.module.css';
 

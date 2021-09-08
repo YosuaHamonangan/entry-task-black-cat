@@ -1,7 +1,7 @@
 import React from 'react';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
-import { ICommentData } from '../interfaces/res';
+import { ICommentData } from '../interfaces/data';
 import { getTimeDiffString } from '../util/date';
 import styles from './Comments.module.css';
 import Icon from './Icon';

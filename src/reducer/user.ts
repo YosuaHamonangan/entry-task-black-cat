@@ -5,7 +5,7 @@ import { IUserState } from '../interfaces/state';
 import { IReqLogin } from '../interfaces/req';
 import { errorKey } from '../enum/error';
 import Cookies from 'js-cookie';
-import { IUserData } from '../interfaces/res';
+import { IUserData } from '../interfaces/data';
 
 const initialState: IUserState = {
   isAuthenticated: null,

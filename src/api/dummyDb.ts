@@ -5,7 +5,7 @@ import {
   IChannelData,
   ILikeData,
   IGoingData,
-} from '../interfaces/res';
+} from '../interfaces/data';
 
 import faker from 'faker';
 

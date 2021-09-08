@@ -11,7 +11,7 @@ import {
 import { IReqGetEvents } from '../interfaces/req';
 import { IEventState, IFilterState } from '../interfaces/state';
 import { getFilterDateRange } from '../util/eventFilter';
-import { IEventData } from '../interfaces/res';
+import { IEventData } from '../interfaces/data';
 
 const initialState: IEventState = {
   list: null,

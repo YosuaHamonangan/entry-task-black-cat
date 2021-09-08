@@ -1,4 +1,4 @@
-import { ICommentData } from '../interfaces/res';
+import { ICommentData } from '../interfaces/data';
 import { dummyCommentData } from './dummyDb';
 
 export async function getEventComment(eventId: string): Promise<ICommentData[]> {

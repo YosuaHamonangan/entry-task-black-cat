@@ -1,6 +1,6 @@
 import React from 'react';
 import iconStyles from '../enum/iconStyles';
-import { IParticipantsData } from '../interfaces/res';
+import { IParticipantsData } from '../interfaces/data';
 import LabeledIcon from './LabeledIcon';
 import ProfilePicture from './ProfilePicture';
 import styles from './Participants.module.css';

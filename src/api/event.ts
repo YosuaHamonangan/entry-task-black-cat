@@ -5,9 +5,8 @@ import {
   IGoingData,
   ILikeData,
   IParticipantsData,
-  IResPostIsGoing,
-  IResPostIsLike,
-} from '../interfaces/res';
+} from '../interfaces/data';
+import { IResPostIsGoing, IResPostIsLike } from '../interfaces/res';
 import {
   IReqGetEvents,
   IReqGetComments,

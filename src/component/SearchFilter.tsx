@@ -9,7 +9,7 @@ import styles from './SearchFilter.module.css';
 import { selectChannels, loadChannels } from '../reducer/event';
 import { getFilterSummary, validateFilter } from '../util/eventFilter';
 import { IFilterState } from '../interfaces/state';
-import { IChannelData } from '../interfaces/res';
+import { IChannelData } from '../interfaces/data';
 
 export default function SearchFilter() {
   const dispatch = useAppDispatch();

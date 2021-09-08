@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { DateFilter } from '../enum/eventFilter';
-import { IChannelData } from '../interfaces/res';
+import { IChannelData } from '../interfaces/data';
 import { IFilterState } from '../interfaces/state';
 import { validateFilter } from '../util/eventFilter';
 

@@ -4,7 +4,7 @@ import { JoinFooter } from '../../../component/Footer';
 import Participants from '../../../component/Participants';
 import { HorizontalSeparator } from '../../../component/Separator';
 import TabContent from '../../../component/TabContent';
-import { ICommentData, IParticipantsData } from '../../../interfaces/res';
+import { ICommentData, IParticipantsData } from '../../../interfaces/data';
 
 interface IProps {
   comments: ICommentData[];
