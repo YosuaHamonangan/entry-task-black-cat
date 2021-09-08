@@ -34,15 +34,19 @@ export function JoinFooter() {
           className={styles.join}
           onClick={() => dispatch(setIsGoing({ eventId: event.id, going: !event.is_going }))}
         >
-          <LabeledIcon
-            icon={event.is_going ? iconStyles.check : iconStyles.checkOutline}
-            iconColor={event.is_going ? globalStyles.primary : globalStyles.complementDark2}
-            iconWidth="2em"
-            iconHeight="2em"
-            gap="0.5em"
-            textColor={event.is_going ? globalStyles.textPrimary : globalStyles.textComplementDark2}
-            text={event.is_going ? 'I am going' : 'Join'}
-          />
+          <div>
+            <LabeledIcon
+              icon={event.is_going ? iconStyles.check : iconStyles.checkOutline}
+              iconColor={event.is_going ? globalStyles.primary : globalStyles.complementDark2}
+              iconWidth="2em"
+              iconHeight="2em"
+              gap="0.5em"
+              textColor={
+                event.is_going ? globalStyles.textPrimary : globalStyles.textComplementDark2
+              }
+              text={event.is_going ? 'I am going' : 'Join'}
+            />
+          </div>
         </button>
       )}
     </div>
