@@ -1,0 +1,14 @@
+.no-activity-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+
+.no-activity-label {
+  color: #bababa;
+  margin-top: 1em;
+}

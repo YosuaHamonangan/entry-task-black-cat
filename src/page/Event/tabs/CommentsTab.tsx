@@ -3,7 +3,6 @@ import Comments from '../../../component/Comments';
 import { CommentFooter } from '../../../component/Footer';
 import TabContent from '../../../component/TabContent';
 import { ICommentData } from '../../../interfaces/data';
-import styles from '../Event.module.css';
 
 interface IProps {
   comments: ICommentData[];
@@ -14,10 +13,7 @@ export default function CommentsTab(props: IProps) {
   const { selected, comments } = props;
   return (
     <TabContent selected={selected}>
-      <div className={`${styles.paddingSide}`}>
-        <Comments comments={comments} />
-      </div>
-
+      <Comments comments={comments} />
       <CommentFooter />
     </TabContent>
   );

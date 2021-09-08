@@ -89,7 +89,13 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 }
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
-  const data = dummyCommentData.filter(({ event }) => event.id === req.eventId);
+  const { eventId, userId } = req;
+  const data = dummyCommentData.filter(({ event, user }) => {
+    let shown = true;
+    if (eventId) shown = shown && event.id === eventId;
+    if (userId) shown = shown && user.id === userId;
+    return shown;
+  });
   data.sort((c1, c2) => {
     if (c1.time > c2.time) return -1;
     if (c1.time < c2.time) return 1;

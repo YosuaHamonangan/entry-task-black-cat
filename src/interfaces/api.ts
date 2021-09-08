@@ -14,7 +14,8 @@ export interface IReqGetEvents {
 
 // Get comments
 export interface IReqGetComments {
-  eventId: string;
+  eventId?: string;
+  userId?: string;
 }
 
 // Get Participants

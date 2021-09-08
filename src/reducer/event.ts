@@ -22,6 +22,7 @@ const initialState: IEventState = {
   participants: null,
   userGoing: null,
   userLikes: null,
+  pastComments: null,
 };
 
 export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) => {
@@ -31,6 +32,13 @@ export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) =
 export const loadComments = createAsyncThunk('event/getComment', async (eventId: string) => {
   return await getComments({ eventId });
 });
+
+export const loadPastComments = createAsyncThunk(
+  'event/loadPastComments',
+  async (userId: string) => {
+    return await getComments({ userId });
+  },
+);
 
 export const loadParticipants = createAsyncThunk(
   'event/getParticipants',
@@ -116,6 +124,10 @@ export const eventSlice = createSlice({
       state.comments = action.payload;
     });
 
+    builder.addCase(loadPastComments.fulfilled, (state, action) => {
+      state.pastComments = action.payload;
+    });
+
     builder.addCase(loadParticipants.fulfilled, (state, action) => {
       state.participants = action.payload;
     });
@@ -175,6 +187,7 @@ export const { setCurrentEvent } = eventSlice.actions;
 
 export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;
+export const selectPastComments = (state: RootState) => state.event.pastComments;
 export const selectEvents = (state: RootState) => state.event.list;
 export const selectChannels = (state: RootState) => state.event.channels;
 export const selectParticipants = (state: RootState) => state.event.participants;

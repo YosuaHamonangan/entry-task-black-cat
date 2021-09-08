@@ -1,6 +1,9 @@
 .container {
   padding: 1em;
+  width: calc(100% - 2em);
+  height: calc(100% - 2em);
 }
+
 .card {
   display: grid;
   grid-template-columns: auto auto auto 1fr auto;

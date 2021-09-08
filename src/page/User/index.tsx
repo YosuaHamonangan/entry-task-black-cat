@@ -35,7 +35,7 @@ export default function User() {
   return (
     <PageTemplate>
       {user && (
-        <>
+        <div className={styles.container}>
           <div className={styles.header}>
             <ProfilePicture className={styles.picture} src={user.picture} size="6em" />
             <div className={styles.username}>{user.username}</div>
@@ -85,7 +85,7 @@ export default function User() {
             <GoingTab selected={selectedTab === TABS.GOING} />
             <PastTab selected={selectedTab === TABS.PAST} />
           </div>
-        </>
+        </div>
       )}
     </PageTemplate>
   );

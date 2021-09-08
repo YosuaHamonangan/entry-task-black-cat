@@ -58,7 +58,7 @@ for (let i = 0; i < 20; i++) {
 
 export const dummyCommentData: ICommentData[] = [];
 dummyEvents.forEach((event) => {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 10; i++) {
     dummyCommentData.push({
       user: dummyUsers[faker.datatype.number(dummyUsers.length - 1)],
       event,

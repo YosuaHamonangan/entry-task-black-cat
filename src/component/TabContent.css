@@ -1,5 +1,7 @@
 .tab-content {
   display: none;
+  height: 100%;
+  width: 100%;
 }
 
 .tab-content.selected {
