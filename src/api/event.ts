@@ -5,15 +5,19 @@ import {
   IGoingData,
   ILikeData,
   IParticipantsData,
+  IUserData,
 } from '../interfaces/data';
-import { IResPostIsGoing, IResPostIsLike } from '../interfaces/res';
 import {
   IReqGetEvents,
   IReqGetComments,
   IReqGetParticipants,
   IReqPostIsGoing,
   IReqPostIsLike,
-} from '../interfaces/req';
+  IResPostIsGoing,
+  IResPostIsLike,
+  IReqPostComment,
+  IResPostComment,
+} from '../interfaces/api';
 import {
   dummyEvents,
   dummyCommentData,
@@ -86,6 +90,11 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
   const data = dummyCommentData.filter(({ event }) => event.id === req.eventId);
+  data.sort((c1, c2) => {
+    if (c1.time > c2.time) return -1;
+    if (c1.time < c2.time) return 1;
+    return 0;
+  });
   return JSON.parse(JSON.stringify(data));
 }
 
@@ -153,5 +162,32 @@ export async function postIsLike(req: IReqPostIsLike): Promise<IResPostIsLike> {
 
   return {
     event: (await getEvents({ id: eventId }))[0],
+  };
+}
+
+export async function postComment(req: IReqPostComment): Promise<IResPostComment> {
+  const { eventId, userId, targetId, comment, time } = req;
+
+  const event = dummyEvents.find((event) => event.id === eventId);
+  if (!event) throw 'event not found';
+
+  const user = dummyUsers.find((user) => user.id === userId);
+  if (!user) throw 'user not found';
+
+  let target: IUserData | null = null;
+  if (targetId) {
+    target = dummyUsers.find((user) => user.id === targetId)!;
+    if (!target) throw 'user not found';
+  }
+
+  dummyCommentData.push({
+    event,
+    user,
+    target,
+    comment,
+    time,
+  });
+  return {
+    comments: await getComments({ eventId }),
   };
 }

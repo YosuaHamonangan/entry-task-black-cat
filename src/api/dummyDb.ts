@@ -64,7 +64,7 @@ dummyEvents.forEach((event) => {
       event,
       comment: faker.lorem.sentences(),
       time: faker.date.recent().toString(),
-      targetId: null,
+      target: null,
     });
   }
 });

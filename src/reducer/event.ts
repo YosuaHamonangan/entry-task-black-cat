@@ -7,8 +7,9 @@ import {
   getParticipants,
   postIsGoing,
   postIsLike,
+  postComment,
 } from '../api/event';
-import { IReqGetEvents } from '../interfaces/req';
+import { IReqGetEvents } from '../interfaces/api';
 import { IEventState, IFilterState } from '../interfaces/state';
 import { getFilterDateRange } from '../util/eventFilter';
 import { IEventData } from '../interfaces/data';
@@ -50,10 +51,24 @@ export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IF
   }
   return await getEvents(req);
 });
+
+export const createComment = createAsyncThunk(
+  'event/createComment',
+  async (data: { eventId: string; userId: string; comment: string; targetId: string | null }) => {
+    const { eventId, userId, comment, targetId } = data;
+    return await postComment({
+      eventId,
+      userId,
+      targetId,
+      comment,
+      time: new Date().toString(),
+    });
+  },
+);
+
 export const loadChannels = createAsyncThunk('event/getChannels', getChannels);
 export const setIsGoing = createAsyncThunk('event/setIsGoing', postIsGoing);
 export const setIsLike = createAsyncThunk('event/setIsLike', postIsLike);
-export const setIs = createAsyncThunk('event/setIsGoing', postIsGoing);
 
 export const loadUserLikes = createAsyncThunk('user/loadUserLikes', async (userId: string) => {
   return await getEvents({
@@ -147,6 +162,11 @@ export const eventSlice = createSlice({
     builder.addCase(loadUserGoing.fulfilled, (state, action) => {
       const events = action.payload;
       state.userGoing = events;
+    });
+
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      const { comments } = action.payload;
+      state.comments = comments;
     });
   },
 });

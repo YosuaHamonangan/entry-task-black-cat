@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
-import { IReqPostLogin } from '../interfaces/req';
-import { IResPostLogin } from '../interfaces/res';
+import { IReqPostLogin, IResPostLogin } from '../interfaces/api';
 import { dummyUsers } from './dummyDb';
 
 export async function postLogin(req: IReqPostLogin): Promise<IResPostLogin> {

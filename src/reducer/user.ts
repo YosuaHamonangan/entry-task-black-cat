@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { postLogin, postLogout, postTokenLogin } from '../api/user';
 import { IUserState } from '../interfaces/state';
-import { IReqPostLogin } from '../interfaces/req';
+import { IReqPostLogin } from '../interfaces/api';
 import { errorKey } from '../enum/error';
 import Cookies from 'js-cookie';
 import { IUserData } from '../interfaces/data';
