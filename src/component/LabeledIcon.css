@@ -1,9 +1,10 @@
 .labeled-icon {
   display: inline-block;
+  width: 100%;
 }
 
 .labeled-icon > span {
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: auto 1fr;
   align-items: center;
 }

@@ -39,17 +39,19 @@ export default function User() {
           <div className={styles.header}>
             <ProfilePicture className={styles.picture} src={user.picture} size="6em" />
             <div className={styles.username}>{user.username}</div>
-            <LabeledIcon
-              className={styles.email}
-              icon={iconStyles.email}
-              iconWidth="1.4em"
-              iconHeight="1.4em"
-              iconColor={globalStyles.primary}
-              text={user.email}
-              textSize="1.1em"
-              textColor={globalStyles.textPrimary}
-              gap="0.5em"
-            />
+            <div>
+              <LabeledIcon
+                className={styles.email}
+                icon={iconStyles.email}
+                iconWidth="1.4em"
+                iconHeight="1.4em"
+                iconColor={globalStyles.primary}
+                text={user.email}
+                textSize="1.1em"
+                textColor={globalStyles.textPrimary}
+                gap="0.5em"
+              />
+            </div>
             <button className={styles.logout} onClick={onLogout}>
               Logout
             </button>

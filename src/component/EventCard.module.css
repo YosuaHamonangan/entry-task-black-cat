@@ -2,7 +2,6 @@
   padding-bottom: 0.5em;
   margin-bottom: 1em;
   border-bottom: solid #e8e8e8 1px;
-  font-size: 1.1em;
   text-decoration: none;
 }
 
@@ -10,8 +9,14 @@
   margin-bottom: 0.8em;
 }
 
+.card button {
+  text-align: left;
+  width: 100%;
+}
+
 .title {
-  margin-bottom: 0.8em;
+  font-size: 2em;
+  margin-bottom: 0.4em;
   margin-top: 0;
   font-weight: 500;
   color: #453257;
@@ -31,16 +36,9 @@
 }
 
 .date {
-  font-size: 0.9em;
-  display: grid;
-  grid-template-columns: 1.5em 1fr;
-  align-items: center;
-}
-
-.dateIcon {
-  width: 1.2em;
-  height: 1.2em;
-  display: inline-block;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .channel {
@@ -53,11 +51,13 @@
 }
 
 .description {
+  font-size: 1.5em;
   color: #67616d;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-bottom: 1em;
 }
 
 .footer {

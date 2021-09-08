@@ -10,7 +10,7 @@ interface IProps {
   iconColor?: globalStyles;
   iconWidth?: number | string;
   iconHeight?: number | string;
-  text: string;
+  text: any;
   textSize?: number | string;
   textColor?: string;
   gap?: number | string;

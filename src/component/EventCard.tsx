@@ -6,6 +6,7 @@ import { IEventData } from '../interfaces/data';
 import styles from './EventCard.module.css';
 import { useAppDispatch } from '../app/hooks';
 import { setIsGoing, setIsLike, setCurrentEvent } from '../reducer/event';
+import LabeledIcon from './LabeledIcon';
 import { getDateTimeString } from '../util/date';
 
 interface Iprops {
@@ -33,15 +34,25 @@ export default function EventCard({ data }: Iprops) {
         <div className={styles.channel}>{data.channel.name}</div>
       </div>
       <button onClick={onClick}>
-        <h2 className={styles.title}>{data.title}</h2>
+        <div className={styles.title}>{data.title}</div>
       </button>
-      <div className={styles.date}>
-        <div className={`${styles.dateIcon} ${iconStyles.time} ${globalStyles.primary}`} />
-        <span className={globalStyles.textPrimary}>
-          {start} - {end}
-        </span>
-      </div>
-      <div className={styles.description}>{data.description}</div>
+      <LabeledIcon
+        icon={iconStyles.time}
+        iconColor={globalStyles.primary}
+        iconHeight="1.2em"
+        iconWidth="1.2em"
+        gap="0.5em"
+        text={
+          <div className={styles.date}>
+            <div>{`${start} - `}</div>
+            <div>{end}</div>
+          </div>
+        }
+        textColor={globalStyles.textPrimary}
+      />
+      <button onClick={onClick}>
+        <div className={styles.description}>{data.description}</div>
+      </button>
       <div className={styles.footer}>
         {data.is_going ? (
           <button
