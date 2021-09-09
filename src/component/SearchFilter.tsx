@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectFilter, setFilter } from '../reducer/filter';
 import { hideSidemenu } from '../reducer/app';
 import styles from './SearchFilter.module.css';
-import { selectChannels, loadChannels } from '../reducer/event';
+import { selectChannels, loadChannels } from '../reducer/eventList';
 import { getFilterSummary, validateFilter } from '../util/eventFilter';
 import { IFilterState } from '../interfaces/state';
 import { IChannelData } from '../interfaces/data';

@@ -31,11 +31,13 @@ import Cookies from 'js-cookie';
 const MAX_GET_COUNT = 10;
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
-  // dummyEvents.sort((ev1, ev2) => {
-  //   if (ev1.start > ev2.start) return -1;
-  //   if (ev1.start < ev2.start) return 1;
-  //   return 0;
-  // });
+  dummyEvents.sort((ev1, ev2) => {
+    const d1 = new Date(ev1.start);
+    const d2 = new Date(ev2.start);
+    if (d1 > d2) return 1;
+    if (d1 < d2) return -1;
+    return 0;
+  });
 
   let dataSource = dummyEvents;
   const { filter, startIdx = 0 } = req;
@@ -43,7 +45,6 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   if (req.id) {
     dataSource = dataSource.filter((event) => event.id === req.id);
   }
-
   const data: IEventData[] = [];
   let i = 0;
   while (i < dataSource.length && data.length < startIdx + MAX_GET_COUNT) {
@@ -85,7 +86,6 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
   }
 
   data.splice(0, startIdx);
-
   return data.map<IEventData>((ev) => {
     const userId = Cookies.get('user_id') || null;
 
@@ -106,8 +106,10 @@ export async function getComments(req: IReqGetComments): Promise<ICommentData[]>
   const { eventId, userId, startIdx = 0 } = req;
 
   dummyCommentData.sort((c1, c2) => {
-    if (c1.time > c2.time) return -1;
-    if (c1.time < c2.time) return 1;
+    const d1 = new Date(c1.time);
+    const d2 = new Date(c2.time);
+    if (d1 > d2) return -1;
+    if (d1 < d2) return 1;
     return 0;
   });
 

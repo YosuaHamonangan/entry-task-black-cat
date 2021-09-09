@@ -1,38 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import { AsyncThunk, Action } from '@reduxjs/toolkit';
+import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { RootState, store } from '../app/store';
+import { IInfiniteListState } from '../interfaces/state';
 
-export default function InfiniteScrolling<ResponseInterface>(props: {
+export default function InfiniteScrolling(props: {
+  loadAsyncThunk: AsyncThunk<any, void, {}>;
   // eslint-disable-next-line no-unused-vars
-  next: () => Promise<ResponseInterface[]>;
-  numDataLoad?: number;
+  selectState: (state: RootState) => IInfiniteListState;
+  resetAction: Action;
   children: any;
 }) {
-  const { next, children } = props;
-  const [data, setData] = useState<ResponseInterface[]>([]);
-  const [hasMore, setHasMore] = useState(true);
+  const { loadAsyncThunk, selectState, resetAction, children } = props;
+
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(selectState);
+  const { list, hasMore } = state;
 
   async function getNextData() {
-    try {
-      const newData = await next();
-      if (newData.length) {
-        const nextData = data.concat(newData);
-        setData(nextData);
-      } else {
-        setHasMore(false);
-      }
-    } catch (err) {
-      console.warn(err);
-    }
+    const { isLoading } = selectState(store.getState());
+    if (!isLoading) await dispatch(loadAsyncThunk());
   }
 
   useEffect(() => {
+    dispatch(resetAction);
     getNextData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <InfiniteScroll
-      dataLength={data.length}
+      dataLength={list.length}
       next={getNextData}
       hasMore={hasMore}
       loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}

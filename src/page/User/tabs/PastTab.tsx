@@ -1,19 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TabContent from '../../../component/TabContent';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectCurrentUser } from '../../../reducer/user';
+import { useAppSelector } from '../../../app/hooks';
 import {
-  selectPastComments,
-  loadPastComments,
+  selectPastCommentList,
+  loadPastCommentList,
   resetPastComments,
-  selectIsLoadingPastComments,
-} from '../../../reducer/event';
+} from '../../../reducer/pastCommentList';
 import Comments from '../../../component/Comments';
 import Icon from '../../../component/Icon';
 import iconStyles from '../../../enum/iconStyles';
 import InfiniteScrolling from '../../../component/InfiniteScrolling';
-import { ICommentData } from '../../../interfaces/data';
-import { store } from '../../../app/store';
 
 interface IProps {
   selected: boolean;
@@ -22,27 +18,15 @@ interface IProps {
 export default function PastTab(props: IProps) {
   const { selected } = props;
 
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(selectCurrentUser);
-  const comments = useAppSelector(selectPastComments);
-
-  useEffect(() => {
-    dispatch(resetPastComments());
-  }, [dispatch]);
-
-  async function getNext() {
-    const startIdx = comments.length || 0;
-    const userId = user!.id;
-    const isLoading = selectIsLoadingPastComments(store.getState());
-    if (isLoading) throw 'Multiple loading';
-
-    const action = await dispatch(loadPastComments({ userId, startIdx }));
-    return action.payload as ICommentData[];
-  }
+  const { list: comments } = useAppSelector(selectPastCommentList);
 
   return (
     <TabContent selected={selected}>
-      <InfiniteScrolling next={getNext}>
+      <InfiniteScrolling
+        loadAsyncThunk={loadPastCommentList}
+        selectState={selectPastCommentList}
+        resetAction={resetPastComments()}
+      >
         {comments?.length ? (
           <Comments comments={comments} />
         ) : (

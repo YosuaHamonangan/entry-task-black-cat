@@ -3,25 +3,12 @@ import { DateFilter } from '../enum/eventFilter';
 import { EVENT_TABS } from '../enum/tabs';
 import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } from './data';
 
-export interface IFilterState {
-  date: DateFilter | null;
-  from?: string | null;
-  to?: string | null;
-  channels: 'all' | IChannelData[] | null;
-  isValid: boolean;
-}
-
 export interface IEventState {
-  events: IEventData[];
-  isLoadingEvents: boolean;
-  channels: IChannelData[] | null;
   current: IEventData | null;
   comments: ICommentData[] | null;
   participants: IParticipantsData | null;
   userLikes: IEventData[] | null;
   userGoing: IEventData[] | null;
-  pastComments: ICommentData[];
-  isLoadingPastComments: boolean;
 }
 
 export interface IUserState {
@@ -36,4 +23,28 @@ export interface IUserState {
 export interface IAppState {
   showSidemenu: boolean;
   selectedEventTab: EVENT_TABS;
+}
+
+export interface IInfiniteListState {
+  list: any[];
+  isLoading: boolean;
+  hasMore: boolean;
+}
+
+export interface IFilterState {
+  date: DateFilter | null;
+  from?: string | null;
+  to?: string | null;
+  channels: 'all' | IChannelData[] | null;
+  isValid: boolean;
+}
+
+export interface IEventListState extends IInfiniteListState {
+  list: IEventData[];
+  channels: IChannelData[];
+  filter: IFilterState;
+}
+
+export interface IPastCommentListState extends IInfiniteListState {
+  list: ICommentData[];
 }
