@@ -5,7 +5,8 @@ import Icon from './Icon';
 import LabeledIcon from './LabeledIcon';
 import styles from './Footer.module.css';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { createComment, selectCurrentEvent, setIsGoing, setIsLike } from '../reducer/event';
+import { selectCurrentEvent, setIsGoing, setIsLike } from '../reducer/event';
+import { createComment } from '../reducer/commentList';
 import { setSelectedEventTab } from '../reducer/app';
 import { EVENT_TABS } from '../enum/tabs';
 import { selectCurrentUser } from '../reducer/user';
@@ -66,14 +67,7 @@ export function CommentFooter() {
     const comment = inputRef.current.value;
     if (!comment) return;
 
-    dispatch(
-      createComment({
-        eventId: event.id,
-        userId: user.id,
-        targetId: null,
-        comment,
-      }),
-    );
+    dispatch(createComment({ targetId: null, comment }));
   }
 
   function onCancel() {

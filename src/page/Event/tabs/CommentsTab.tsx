@@ -1,19 +1,28 @@
 import React from 'react';
+import { useAppSelector } from '../../../app/hooks';
 import Comments from '../../../component/Comments';
 import { CommentFooter } from '../../../component/Footer';
+import InfiniteScrolling from '../../../component/InfiniteScrolling';
 import TabContent from '../../../component/TabContent';
-import { ICommentData } from '../../../interfaces/data';
+import { loadCommentList, resetComments, selectCommentList } from '../../../reducer/commentList';
 
 interface IProps {
-  comments: ICommentData[];
   selected: boolean;
 }
 
 export default function CommentsTab(props: IProps) {
-  const { selected, comments } = props;
+  const { selected } = props;
+  const { list: comments } = useAppSelector(selectCommentList);
+
   return (
     <TabContent selected={selected}>
-      <Comments comments={comments} />
+      <InfiniteScrolling
+        loadAsyncThunk={loadCommentList}
+        selectState={selectCommentList}
+        resetAction={resetComments()}
+      >
+        <Comments comments={comments} />
+      </InfiniteScrolling>
       <CommentFooter />
     </TabContent>
   );

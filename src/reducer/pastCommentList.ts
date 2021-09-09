@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { getChannels, getComments } from '../api/event';
+import { getComments } from '../api/event';
 import { IReqGetComments } from '../interfaces/api';
 import { IPastCommentListState } from '../interfaces/state';
 import { ICommentData } from '../interfaces/data';
@@ -32,9 +32,7 @@ export const loadPastCommentList = createAsyncThunk<ICommentData[], void, { stat
   },
 );
 
-export const loadChannels = createAsyncThunk('event/getChannels', getChannels);
-
-export const eventSlice = createSlice({
+export const pastCommentSlice = createSlice({
   name: 'pastCommentList',
   initialState,
   reducers: {
@@ -63,8 +61,8 @@ export const eventSlice = createSlice({
   },
 });
 
-export const { resetPastComments } = eventSlice.actions;
+export const { resetPastComments } = pastCommentSlice.actions;
 
 export const selectPastCommentList = (state: RootState) => state.pastCommentList;
 
-export default eventSlice.reducer;
+export default pastCommentSlice.reducer;

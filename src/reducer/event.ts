@@ -1,19 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import {
-  getEvents,
-  getComments,
-  getParticipants,
-  postIsGoing,
-  postIsLike,
-  postComment,
-} from '../api/event';
+import { getEvents, getParticipants, postIsGoing, postIsLike } from '../api/event';
 import { IEventState } from '../interfaces/state';
 import { IEventData } from '../interfaces/data';
 
 const initialState: IEventState = {
   current: null,
-  comments: null,
   participants: null,
   userGoing: null,
   userLikes: null,
@@ -23,28 +15,10 @@ export const loadEvent = createAsyncThunk('event/getEvent', async (id: string) =
   return await getEvents({ id });
 });
 
-export const loadComments = createAsyncThunk('event/getComment', async (eventId: string) => {
-  return await getComments({ eventId });
-});
-
 export const loadParticipants = createAsyncThunk(
   'event/getParticipants',
   async (eventId: string) => {
     return await getParticipants({ eventId });
-  },
-);
-
-export const createComment = createAsyncThunk(
-  'event/createComment',
-  async (data: { eventId: string; userId: string; comment: string; targetId: string | null }) => {
-    const { eventId, userId, comment, targetId } = data;
-    return await postComment({
-      eventId,
-      userId,
-      targetId,
-      comment,
-      time: new Date().toString(),
-    });
   },
 );
 
@@ -75,10 +49,6 @@ export const eventSlice = createSlice({
     builder.addCase(loadEvent.fulfilled, (state, action) => {
       const { data } = action.payload;
       state.current = data[0];
-    });
-
-    builder.addCase(loadComments.fulfilled, (state, action) => {
-      state.comments = action.payload;
     });
 
     builder.addCase(loadParticipants.fulfilled, (state, action) => {
@@ -128,18 +98,12 @@ export const eventSlice = createSlice({
       const { data } = action.payload;
       state.userGoing = data;
     });
-
-    builder.addCase(createComment.fulfilled, (state, action) => {
-      const { comments } = action.payload;
-      state.comments = comments;
-    });
   },
 });
 
 export const { setCurrentEvent } = eventSlice.actions;
 
 export const selectCurrentEvent = (state: RootState) => state.event.current;
-export const selectCurrentComments = (state: RootState) => state.event.comments;
 export const selectParticipants = (state: RootState) => state.event.participants;
 export const selectUserLikes = (state: RootState) => state.event.userLikes;
 export const selectUserGoing = (state: RootState) => state.event.userGoing;

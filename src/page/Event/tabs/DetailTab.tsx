@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAppSelector } from '../../../app/hooks';
 import Comments from '../../../component/Comments';
 import { JoinFooter } from '../../../component/Footer';
 import LabeledIcon from '../../../component/LabeledIcon';
@@ -7,19 +8,22 @@ import { HorizontalSeparator, VerticalSeparator } from '../../../component/Separ
 import TabContent from '../../../component/TabContent';
 import globalStyles from '../../../enum/globalStyles';
 import iconStyles from '../../../enum/iconStyles';
-import { IEventData, ICommentData, IParticipantsData } from '../../../interfaces/data';
+import { IEventData, IParticipantsData } from '../../../interfaces/data';
 import { getFullDateString, getTimeString } from '../../../util/date';
+import { selectCommentList } from '../../../reducer/commentList';
 import styles from './DetailTab.module.css';
 
 interface IProps {
   event: IEventData;
-  comments: ICommentData[];
   participants: IParticipantsData;
   selected: boolean;
 }
 
 export default function DetailTab(props: IProps) {
-  const { event, comments, selected, participants } = props;
+  const { event, selected, participants } = props;
+
+  const comments = useAppSelector(selectCommentList).list.slice(0, 5);
+
   return (
     <TabContent selected={selected}>
       <div className={styles.details}>

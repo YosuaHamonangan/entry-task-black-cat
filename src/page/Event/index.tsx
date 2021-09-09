@@ -3,10 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   loadEvent,
-  loadComments,
   loadParticipants,
   selectCurrentEvent,
-  selectCurrentComments,
   selectParticipants,
 } from '../../reducer/event';
 import PageTemplate from '../../component/PageTemplate';
@@ -35,15 +33,10 @@ export default function Event() {
 
   const { id } = useParams<{ id: string }>();
   let event = useAppSelector(selectCurrentEvent);
-  let comments = useAppSelector(selectCurrentComments);
   let participants = useAppSelector(selectParticipants);
 
   if (event?.id !== id) {
     event = null;
-  }
-
-  if (comments && comments[0]?.event.id !== id) {
-    comments = null;
   }
 
   if (participants && participants.eventId !== id) {
@@ -52,14 +45,13 @@ export default function Event() {
 
   useEffect(() => {
     if (!event) dispatch(loadEvent(id));
-    if (!comments) dispatch(loadComments(id));
     if (!participants) dispatch(loadParticipants(id));
-  }, [dispatch, id, event, comments, participants]);
+  }, [dispatch, id, event, participants]);
 
   return (
     <PageTemplate>
       <div className={styles.container}>
-        {event && comments && participants && (
+        {event && participants && (
           <>
             <div className={styles.header}>
               <div className={styles.channel}>{event.channel.name}</div>
@@ -102,15 +94,13 @@ export default function Event() {
             <DetailTab
               selected={selectedTab === EVENT_TABS.DETAIL}
               event={event}
-              comments={comments}
               participants={participants}
             />
             <ParticipantsTab
               selected={selectedTab === EVENT_TABS.PARTICIPANTS}
-              comments={comments}
               participants={participants}
             />
-            <CommentsTab selected={selectedTab === EVENT_TABS.COMMENTS} comments={comments} />
+            <CommentsTab selected={selectedTab === EVENT_TABS.COMMENTS} />
           </>
         )}
       </div>

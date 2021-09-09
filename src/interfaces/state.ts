@@ -5,7 +5,6 @@ import { IEventData, ICommentData, IChannelData, IParticipantsData, IUserData } 
 
 export interface IEventState {
   current: IEventData | null;
-  comments: ICommentData[] | null;
   participants: IParticipantsData | null;
   userLikes: IEventData[] | null;
   userGoing: IEventData[] | null;
@@ -47,5 +46,9 @@ export interface IEventListState extends IInfiniteListState {
 }
 
 export interface IPastCommentListState extends IInfiniteListState {
+  list: ICommentData[];
+}
+
+export interface ICommentListState extends IInfiniteListState {
   list: ICommentData[];
 }
