@@ -12,7 +12,7 @@ import InfiniteScrolling from '../component/InfiniteScrolling';
 export default function Home() {
   const dispatch = useAppDispatch();
 
-  const { list: events } = useAppSelector(selectEventList);
+  const { list: events, total } = useAppSelector(selectEventList);
   const filter = useAppSelector(selectFilter);
 
   return (
@@ -20,7 +20,7 @@ export default function Home() {
       <div className={styles.container}>
         {filter.isValid && events && (
           <div className={styles.searchHeader}>
-            <div className={styles.resultNum}>{events.length} Results</div>
+            <div className={styles.resultNum}>{total} Results</div>
             <button className={styles.clearBtn} onClick={() => dispatch(clearFilter())}>
               CLEAR SEARCH
             </button>

@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { getEvents, getChannels } from '../api/event';
-import { IReqGetEvents } from '../interfaces/api';
+import { IReqGetEvents, IResGetEvents } from '../interfaces/api';
 import { IEventListState, IFilterState } from '../interfaces/state';
 import { getFilterDateRange, validateFilter } from '../util/eventFilter';
-import { IChannelData, IEventData } from '../interfaces/data';
+import { IChannelData } from '../interfaces/data';
 import { DateFilter } from '../enum/eventFilter';
 
 const initialState: IEventListState = {
   list: [],
+  total: 0,
   isLoading: false,
   hasMore: true,
   channelList: [],
@@ -21,7 +22,7 @@ const initialState: IEventListState = {
   },
 };
 
-export const loadEventList = createAsyncThunk<IEventData[], void, { state: RootState }>(
+export const loadEventList = createAsyncThunk<IResGetEvents, void, { state: RootState }>(
   'eventList/load',
   async (_, { getState }) => {
     const rootState = getState();
@@ -52,6 +53,7 @@ export const eventSlice = createSlice({
   reducers: {
     resetEvents: (state) => {
       state.list = [];
+      state.total = 0;
       state.hasMore = true;
     },
     setDateFilter: (state, action: PayloadAction<{ date: DateFilter | null }>) => {
@@ -87,11 +89,11 @@ export const eventSlice = createSlice({
 
     builder.addCase(loadEventList.fulfilled, (state, action) => {
       state.isLoading = false;
-      if (action.payload.length) {
-        state.list = state.list.concat(action.payload);
-      } else {
-        state.hasMore = false;
-      }
+
+      const { data, total } = action.payload;
+      state.list = state.list.concat(data);
+      state.total = total;
+      state.hasMore = state.list.length !== total;
     });
 
     builder.addCase(loadChannels.fulfilled, (state, action) => {

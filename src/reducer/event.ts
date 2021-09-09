@@ -73,7 +73,8 @@ export const eventSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loadEvent.fulfilled, (state, action) => {
-      state.current = action.payload[0];
+      const { data } = action.payload;
+      state.current = data[0];
     });
 
     builder.addCase(loadComments.fulfilled, (state, action) => {
@@ -119,13 +120,13 @@ export const eventSlice = createSlice({
     });
 
     builder.addCase(loadUserLikes.fulfilled, (state, action) => {
-      const events = action.payload;
-      state.userLikes = events;
+      const { data } = action.payload;
+      state.userLikes = data;
     });
 
     builder.addCase(loadUserGoing.fulfilled, (state, action) => {
-      const events = action.payload;
-      state.userGoing = events;
+      const { data } = action.payload;
+      state.userGoing = data;
     });
 
     builder.addCase(createComment.fulfilled, (state, action) => {

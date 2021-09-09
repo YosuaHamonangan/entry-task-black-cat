@@ -13,6 +13,11 @@ export interface IReqGetEvents {
   startIdx?: number;
 }
 
+export interface IResGetEvents {
+  data: IEventData[];
+  total: number;
+}
+
 // Get comments
 export interface IReqGetComments {
   eventId?: string;

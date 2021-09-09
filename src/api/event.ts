@@ -17,6 +17,7 @@ import {
   IResPostIsLike,
   IReqPostComment,
   IResPostComment,
+  IResGetEvents,
 } from '../interfaces/api';
 import {
   dummyEvents,
@@ -30,7 +31,7 @@ import Cookies from 'js-cookie';
 
 const MAX_GET_COUNT = 10;
 
-export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
+export async function getEvents(req: IReqGetEvents): Promise<IResGetEvents> {
   dummyEvents.sort((ev1, ev2) => {
     const d1 = new Date(ev1.start);
     const d2 = new Date(ev2.start);
@@ -39,22 +40,19 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
     return 0;
   });
 
-  let dataSource = dummyEvents;
+  let data = dummyEvents;
   const { filter, startIdx = 0 } = req;
 
   if (req.id) {
-    dataSource = dataSource.filter((event) => event.id === req.id);
+    data = data.filter((event) => event.id === req.id);
   }
-  const data: IEventData[] = [];
-  let i = 0;
-  while (i < dataSource.length && data.length < startIdx + MAX_GET_COUNT) {
-    const event = dataSource[i];
-    let shown = true;
 
-    if (filter) {
-      const minDate = filter.from ? new Date(filter.from) : null;
-      const maxDate = filter.to ? new Date(filter.to) : null;
+  if (filter) {
+    const minDate = filter.from ? new Date(filter.from) : null;
+    const maxDate = filter.to ? new Date(filter.to) : null;
 
+    data = data.filter((event) => {
+      let shown = true;
       if (minDate && maxDate) {
         const startDate = new Date(event.start);
         shown = shown && startDate >= minDate && startDate <= maxDate;
@@ -79,14 +77,14 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
             ({ user, event: ev }) => user.id === filter.going && event.id === ev.id,
           );
       }
-    }
 
-    if (shown) data.push(event);
-    i++;
+      return shown;
+    });
   }
 
-  data.splice(0, startIdx);
-  return data.map<IEventData>((ev) => {
+  const total = data.length;
+  data = data.slice(startIdx, startIdx + MAX_GET_COUNT);
+  data = data.map<IEventData>((ev) => {
     const userId = Cookies.get('user_id') || null;
 
     const goingData = dummyGoingData.filter(({ event }) => event.id === ev.id);
@@ -100,6 +98,8 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
       likes: likeData.length,
     };
   });
+
+  return { data, total };
 }
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
@@ -170,7 +170,7 @@ export async function postIsGoing(req: IReqPostIsGoing): Promise<IResPostIsGoing
   }
 
   return {
-    event: (await getEvents({ id: eventId }))[0],
+    event: (await getEvents({ id: eventId })).data[0],
   };
 }
 
@@ -195,7 +195,7 @@ export async function postIsLike(req: IReqPostIsLike): Promise<IResPostIsLike> {
   }
 
   return {
-    event: (await getEvents({ id: eventId }))[0],
+    event: (await getEvents({ id: eventId })).data[0],
   };
 }
 
