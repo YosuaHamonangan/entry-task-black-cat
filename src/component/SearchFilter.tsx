@@ -3,13 +3,13 @@ import { DateFilter } from '../enum/eventFilter';
 import globalStyles from '../enum/globalStyles';
 import iconStyles from '../enum/iconStyles';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { selectFilter, setFilter } from '../reducer/filter';
 import { hideSidemenu } from '../reducer/app';
-import styles from './SearchFilter.module.css';
+import { loadEventList, resetEvents, selectFilter, setFilter } from '../reducer/eventList';
 import { selectChannels, loadChannels } from '../reducer/eventList';
 import { getFilterSummary, validateFilter } from '../util/eventFilter';
 import { IFilterState } from '../interfaces/state';
 import { IChannelData } from '../interfaces/data';
+import styles from './SearchFilter.module.css';
 
 export default function SearchFilter() {
   const dispatch = useAppDispatch();
@@ -65,6 +65,8 @@ export default function SearchFilter() {
   function onSubmit() {
     dispatch(setFilter(selectedFilter));
     dispatch(hideSidemenu());
+    dispatch(resetEvents());
+    dispatch(loadEventList());
   }
 
   useEffect(() => {

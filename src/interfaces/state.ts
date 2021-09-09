@@ -41,7 +41,7 @@ export interface IFilterState {
 
 export interface IEventListState extends IInfiniteListState {
   list: IEventData[];
-  channels: IChannelData[];
+  channelList: IChannelData[];
   filter: IFilterState;
 }
 

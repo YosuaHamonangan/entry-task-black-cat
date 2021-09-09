@@ -2,7 +2,7 @@ import React from 'react';
 import PageTemplate from '../component/PageTemplate';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { loadEventList, resetEvents, selectEventList } from '../reducer/eventList';
-import { selectFilter, clearFilter } from '../reducer/filter';
+import { selectFilter, clearFilter } from '../reducer/eventList';
 import SearchFilter from '../component/SearchFilter';
 import styles from './Home.module.css';
 import { getFilterSummary } from '../util/eventFilter';
