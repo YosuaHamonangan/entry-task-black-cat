@@ -12,7 +12,8 @@ export interface IFilterState {
 }
 
 export interface IEventState {
-  list: IEventData[] | null;
+  events: IEventData[];
+  isLoadingEvents: boolean;
   channels: IChannelData[] | null;
   current: IEventData | null;
   comments: ICommentData[] | null;

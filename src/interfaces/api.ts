@@ -10,6 +10,7 @@ export interface IReqGetEvents {
     likes?: string;
     going?: string;
   };
+  startIdx?: number;
 }
 
 // Get comments

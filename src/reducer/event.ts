@@ -15,7 +15,8 @@ import { getFilterDateRange } from '../util/eventFilter';
 import { IEventData } from '../interfaces/data';
 
 const initialState: IEventState = {
-  list: null,
+  events: [],
+  isLoadingEvents: false,
   channels: null,
   current: null,
   comments: null,
@@ -48,18 +49,23 @@ export const loadParticipants = createAsyncThunk(
   },
 );
 
-export const loadEvents = createAsyncThunk('event/getEvents', async (filter?: IFilterState) => {
-  const req: IReqGetEvents = {};
-  if (filter?.isValid) {
-    const range = getFilterDateRange(filter);
-    req.filter = {
-      from: range?.from.toString(),
-      to: range?.to.toString(),
-      channels: filter.channels !== 'all' ? filter.channels!.map(({ id }) => id) : undefined,
-    };
-  }
-  return await getEvents(req);
-});
+export const loadEvents = createAsyncThunk(
+  'event/getEvents',
+  async (arg: { filter?: IFilterState; startIdx: number }) => {
+    const { filter, startIdx } = arg;
+    const req: IReqGetEvents = { startIdx };
+
+    if (filter?.isValid) {
+      const range = getFilterDateRange(filter);
+      req.filter = {
+        from: range?.from.toString(),
+        to: range?.to.toString(),
+        channels: filter.channels !== 'all' ? filter.channels!.map(({ id }) => id) : undefined,
+      };
+    }
+    return await getEvents(req);
+  },
+);
 
 export const createComment = createAsyncThunk(
   'event/createComment',
@@ -98,6 +104,9 @@ export const eventSlice = createSlice({
     setCurrentEvent: (state, action: PayloadAction<IEventData>) => {
       state.current = action.payload;
     },
+    resetEvents: (state) => {
+      state.events = [];
+    },
     resetPastComments: (state) => {
       state.pastComments = [];
     },
@@ -107,8 +116,17 @@ export const eventSlice = createSlice({
       state.current = action.payload[0];
     });
 
+    builder.addCase(loadEvents.pending, (state) => {
+      state.isLoadingEvents = true;
+    });
+
+    builder.addCase(loadEvents.rejected, (state) => {
+      state.isLoadingEvents = false;
+    });
+
     builder.addCase(loadEvents.fulfilled, (state, action) => {
-      state.list = action.payload;
+      state.events = state.events.concat(action.payload);
+      state.isLoadingEvents = false;
     });
 
     builder.addCase(loadChannels.fulfilled, (state, action) => {
@@ -138,8 +156,8 @@ export const eventSlice = createSlice({
 
     builder.addCase(setIsGoing.fulfilled, (state, action) => {
       const { event: newEvent } = action.payload;
-      state.list =
-        state.list?.map((event) => {
+      state.events =
+        state.events?.map((event) => {
           if (event.id === newEvent.id) return newEvent;
           else return event;
         }) || null;
@@ -155,8 +173,8 @@ export const eventSlice = createSlice({
 
     builder.addCase(setIsLike.fulfilled, (state, action) => {
       const { event: newEvent } = action.payload;
-      state.list =
-        state.list?.map((event) => {
+      state.events =
+        state.events?.map((event) => {
           if (event.id === newEvent.id) return newEvent;
           else return event;
         }) || null;
@@ -187,13 +205,14 @@ export const eventSlice = createSlice({
   },
 });
 
-export const { setCurrentEvent, resetPastComments } = eventSlice.actions;
+export const { setCurrentEvent, resetEvents, resetPastComments } = eventSlice.actions;
 
 export const selectCurrentEvent = (state: RootState) => state.event.current;
 export const selectCurrentComments = (state: RootState) => state.event.comments;
 export const selectPastComments = (state: RootState) => state.event.pastComments;
 export const selectIsLoadingPastComments = (state: RootState) => state.event.isLoadingPastComments;
-export const selectEvents = (state: RootState) => state.event.list;
+export const selectEvents = (state: RootState) => state.event.events;
+export const selectIsLoadingEvents = (state: RootState) => state.event.isLoadingEvents;
 export const selectChannels = (state: RootState) => state.event.channels;
 export const selectParticipants = (state: RootState) => state.event.participants;
 export const selectUserLikes = (state: RootState) => state.event.userLikes;

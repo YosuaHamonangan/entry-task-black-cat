@@ -45,7 +45,7 @@ for (let i = 0; i < 20; i++) {
     id: faker.datatype.uuid(),
     user: dummyUsers[faker.datatype.number(dummyUsers.length - 1)],
     channel: dummyChannels[faker.datatype.number(dummyChannels.length - 1)],
-    title: title || faker.lorem.sentence(),
+    title: `${title || faker.lorem.sentence()} (${i})`,
     start: start.toString(),
     end: faker.date.future(0, start).toString(),
     description: faker.lorem.paragraphs(),

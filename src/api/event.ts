@@ -31,19 +31,28 @@ import Cookies from 'js-cookie';
 const MAX_GET_COUNT = 10;
 
 export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
-  let data = dummyEvents;
-  const { filter } = req;
+  // dummyEvents.sort((ev1, ev2) => {
+  //   if (ev1.start > ev2.start) return -1;
+  //   if (ev1.start < ev2.start) return 1;
+  //   return 0;
+  // });
+
+  let dataSource = dummyEvents;
+  const { filter, startIdx = 0 } = req;
 
   if (req.id) {
-    data = data.filter((event) => event.id === req.id);
+    dataSource = dataSource.filter((event) => event.id === req.id);
   }
 
-  if (filter) {
-    const minDate = filter.from ? new Date(filter.from) : null;
-    const maxDate = filter.to ? new Date(filter.to) : null;
+  const data: IEventData[] = [];
+  let i = 0;
+  while (i < dataSource.length && data.length < startIdx + MAX_GET_COUNT) {
+    const event = dataSource[i];
+    let shown = true;
 
-    data = data.filter((event) => {
-      let shown = true;
+    if (filter) {
+      const minDate = filter.from ? new Date(filter.from) : null;
+      const maxDate = filter.to ? new Date(filter.to) : null;
 
       if (minDate && maxDate) {
         const startDate = new Date(event.start);
@@ -69,10 +78,13 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
             ({ user, event: ev }) => user.id === filter.going && event.id === ev.id,
           );
       }
+    }
 
-      return shown;
-    });
+    if (shown) data.push(event);
+    i++;
   }
+
+  data.splice(0, startIdx);
 
   return data.map<IEventData>((ev) => {
     const userId = Cookies.get('user_id') || null;
@@ -92,6 +104,13 @@ export async function getEvents(req: IReqGetEvents): Promise<IEventData[]> {
 
 export async function getComments(req: IReqGetComments): Promise<ICommentData[]> {
   const { eventId, userId, startIdx = 0 } = req;
+
+  dummyCommentData.sort((c1, c2) => {
+    if (c1.time > c2.time) return -1;
+    if (c1.time < c2.time) return 1;
+    return 0;
+  });
+
   const data: ICommentData[] = [];
   let i = 0;
   while (i < dummyCommentData.length && data.length < startIdx + MAX_GET_COUNT) {
@@ -107,11 +126,7 @@ export async function getComments(req: IReqGetComments): Promise<ICommentData[]>
     i++;
   }
   data.splice(0, startIdx);
-  data.sort((c1, c2) => {
-    if (c1.time > c2.time) return -1;
-    if (c1.time < c2.time) return 1;
-    return 0;
-  });
+
   return JSON.parse(JSON.stringify(data));
 }
 
