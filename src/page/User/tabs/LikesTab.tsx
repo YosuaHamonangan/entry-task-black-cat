@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import React from 'react';
+import { useAppSelector } from '../../../app/hooks';
 import TabContent from '../../../component/TabContent';
-import { selectCurrentUser } from '../../../reducer/user';
-import { loadUserLikes, selectUserLikes } from '../../../reducer/event';
+import {
+  loadUserLikesList,
+  selectUserLikesList,
+  resetUserLikes,
+} from '../../../reducer/userLikesList';
 import EventList from '../../../component/EventList';
+import InfiniteScrolling from '../../../component/InfiniteScrolling';
 
 interface IProps {
   selected: boolean;
@@ -12,20 +16,17 @@ interface IProps {
 export default function LikesTab(props: IProps) {
   const { selected } = props;
 
-  const dispatch = useAppDispatch();
-  // Todo change event loader
-  const events = useAppSelector(selectUserLikes);
-  const user = useAppSelector(selectCurrentUser);
-
-  useEffect(() => {
-    if (!user) return;
-
-    dispatch(loadUserLikes(user.id));
-  }, [dispatch, user]);
+  const { list: events } = useAppSelector(selectUserLikesList);
 
   return (
     <TabContent selected={selected}>
-      <EventList events={events} />
+      <InfiniteScrolling
+        loadAsyncThunk={loadUserLikesList}
+        selectState={selectUserLikesList}
+        resetAction={resetUserLikes()}
+      >
+        <EventList events={events} />
+      </InfiniteScrolling>
     </TabContent>
   );
 }

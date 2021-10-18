@@ -52,3 +52,11 @@ export interface IPastCommentListState extends IInfiniteListState {
 export interface ICommentListState extends IInfiniteListState {
   list: ICommentData[];
 }
+
+export interface IUserGoingListState extends IInfiniteListState {
+  list: IEventData[];
+}
+
+export interface IUserLikesListState extends IInfiniteListState {
+  list: IEventData[];
+}

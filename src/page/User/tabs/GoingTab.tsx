@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import React from 'react';
+import { useAppSelector } from '../../../app/hooks';
 import TabContent from '../../../component/TabContent';
-import { selectCurrentUser } from '../../../reducer/user';
-import { loadUserGoing, selectUserGoing } from '../../../reducer/event';
+import {
+  loadUserGoingList,
+  selectUserGoingList,
+  resetUserGoing,
+} from '../../../reducer/userGoingList';
 import EventList from '../../../component/EventList';
+import InfiniteScrolling from '../../../component/InfiniteScrolling';
 
 interface IProps {
   selected: boolean;
@@ -12,20 +16,17 @@ interface IProps {
 export default function GoingTab(props: IProps) {
   const { selected } = props;
 
-  const dispatch = useAppDispatch();
-  // Todo change event loader
-  const events = useAppSelector(selectUserGoing);
-  const user = useAppSelector(selectCurrentUser);
-
-  useEffect(() => {
-    if (!user) return;
-
-    dispatch(loadUserGoing(user.id));
-  }, [dispatch, user]);
+  const { list: events } = useAppSelector(selectUserGoingList);
 
   return (
     <TabContent selected={selected}>
-      <EventList events={events} />
+      <InfiniteScrolling
+        loadAsyncThunk={loadUserGoingList}
+        selectState={selectUserGoingList}
+        resetAction={resetUserGoing()}
+      >
+        <EventList events={events} />
+      </InfiniteScrolling>
     </TabContent>
   );
 }
